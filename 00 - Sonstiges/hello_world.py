@@ -6,9 +6,7 @@ Designed to demonstrate basic Python script structure and execution.
 """
 
 def main():
-    """"
-    test
-    """
+
     print("Hello, world!")
 
 
