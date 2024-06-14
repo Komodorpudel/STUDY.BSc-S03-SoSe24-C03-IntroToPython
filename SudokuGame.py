@@ -48,6 +48,7 @@ class SudokuGame:
 # -----------------------------------------------------------------
     def check_win(self):
         full_set = set(range(1, 10))
+        
         # Check rows and columns
         for i in range(9):
             row_set = set(self.board[i])
