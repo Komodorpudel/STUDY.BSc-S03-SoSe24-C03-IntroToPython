@@ -1,4 +1,8 @@
+import random
+
 class SudokuBoardGenerator:
+
+# -----------------------------------------------------------------
     def __init__(self, difficulty=0):
         self.board = [[{'num': 0, 'mutable': True} for _ in range(9)] for _ in range(9)]
         if not self.generate_full_board():
@@ -24,6 +28,7 @@ class SudokuBoardGenerator:
             return False
         return fill()
 
+# -----------------------------------------------------------------
     def valid_placement(self, row, col, num):
         block_row, block_col = 3 * (row // 3), 3 * (col // 3)
         if any(self.board[row][i]['num'] == num for i in range(9)):
@@ -34,6 +39,7 @@ class SudokuBoardGenerator:
             return False
         return True
 
+# -----------------------------------------------------------------
     def remove_numbers(self, difficulty):
         cells_to_keep = 81 - (difficulty * 10)
         cells_to_remove = 81 - cells_to_keep
@@ -47,6 +53,6 @@ class SudokuBoardGenerator:
             for cell in row:
                 if cell['num'] != 0:
                     cell['mutable'] = False
-
+# -----------------------------------------------------------------
     def get_board(self):
         return [[cell.copy() for cell in row] for row in self.board]

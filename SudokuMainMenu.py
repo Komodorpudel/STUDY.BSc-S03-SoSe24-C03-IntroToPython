@@ -1,5 +1,6 @@
 import os
-import SudokuBoardGenerator
+from SudokuBoardGenerator import SudokuBoardGenerator
+from SudokuGame import SudokuGame
 
 class SudokuMainMenu:
 
@@ -43,13 +44,12 @@ class SudokuMainMenu:
 
 # -----------------------------------------------------------------
     def start_new_game(self):
-        # Here you could add difficulty selection and then initialize the SudokuGame
         print("Starting a new game...")
-        difficulty = input("Enter the difficulty: ")
-        # Assuming difficulty is selected here or default is used
-        game = SudokuBoardGenerator(difficulty)  # Example with difficulty 5
-        print("Game started. (Here you would run game logic)")
-        # Optionally save the game state on exit or periodically
+        difficulty = int(input("Enter difficulty (0-9): "))
+
+        # my_generator = SudokuBoardGenerator(difficulty)
+        my_game = SudokuGame(None, self.user_path, my_main_menu)
+        my_game.play()
 
 # -----------------------------------------------------------------
     def load_game(self):
@@ -71,9 +71,14 @@ class SudokuMainMenu:
         else:
             print("No saved games available.")
 
+# -----------------------------------------------------------------
+
     def play_game(self, game_path):
         print(f"Loading game from {game_path}")
         # Here you would actually load the game state and continue the game
+
+
+# -----------------------------------------------------------------
 
     def view_highscore(self):
         # Highscore viewing logic
@@ -82,5 +87,5 @@ class SudokuMainMenu:
 
 # -----------------------------------------------------------------
 if __name__ == "__main__":
-    menu = SudokuMainMenu()
-    menu.display_menu()
+    my_main_menu = SudokuMainMenu()
+    my_main_menu.display_menu()
