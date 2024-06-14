@@ -1,4 +1,5 @@
 class SudokuGame:
+# -----------------------------------------------------------------
     def __init__(self, board=None):
         if board is None:
             self.board = [
@@ -15,20 +16,33 @@ class SudokuGame:
         else:
             self.board = board
 
+        self.immutable_numbers = [[not cell == 0 for cell in row] for row in self.board]
+
 # -----------------------------------------------------------------
     def is_valid_move(self, row, col, num):
-        if self.board[row][col] != 0:
+        
+        if self.immutable_numbers[row][col]:
+            print("This cell's value is fixed and cannot be changed.")
             return False
+        
         for i in range(9):
-            if self.board[row][i] == num or self.board[i][col] == num:
+            if self.board[row][i] == num:
+                print(f"The number {num} is already in this row.")
                 return False
+            
+            if self.board[i][col] == num:
+                print(f"The number {num} is already in this column.")
+                return False
+            
         start_row, start_col = 3 * (row // 3), 3 * (col // 3)
         for i in range(3):
             for j in range(3):
                 if self.board[start_row + i][start_col + j] == num:
+                    print(f"The number {num} is already in this block.")
                     return False
+                
+        print(f"Move accepted.")         
         return True
-    
 
 # -----------------------------------------------------------------
     def place_number(self, row, col, num):
@@ -65,16 +79,17 @@ class SudokuGame:
                 num = int(input("Enter number (1-9): "))
                 if 0 <= row < 9 and 0 <= col < 9:
                     if self.place_number(row, col, num):
-                        print("Move accepted.")
                         self.print_board()
                     else:
-                        print("Invalid move.")
+                        pass
                 else:
                     print("Please enter a valid row and column between 1 and 9.")
             except ValueError:
                 print("Invalid input. Please enter integers only.")
             if input("Type 'exit' to quit or hit enter to continue: ").lower() == 'exit':
                 break
+
+# -----------------------------------------------------------------
 
 # To play the game in a terminal
 if __name__ == "__main__":
