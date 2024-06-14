@@ -59,7 +59,7 @@ class SudokuSaveLoadManager:
                         board.append(row)
 
         # Print out the loaded board for debugging
-        """ 
+        """
         print("DEBUG: Loaded board:")
         for row in board:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))

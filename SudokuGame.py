@@ -4,7 +4,7 @@ from SudokuStopwatch import SudokuStopwatch
 from SudokuHighscore import *
 
 class SudokuGame:
-    
+
 # -----------------------------------------------------------------
     def __init__(self, my_main_menu, difficulty, board = None, username = "", mistakes=0, total_elapsed_time=0):
         self.board = board
@@ -29,7 +29,7 @@ class SudokuGame:
                 [{'num': 2, 'mutable': False}, {'num': 8, 'mutable': False}, {'num': 7, 'mutable': False}, {'num': 4, 'mutable': False}, {'num': 1, 'mutable': False}, {'num': 9, 'mutable': False}, {'num': 6, 'mutable': False}, {'num': 3, 'mutable': False}, {'num': 5, 'mutable': False}],
                 [{'num': 3, 'mutable': False}, {'num': 4, 'mutable': False}, {'num': 5, 'mutable': False}, {'num': 2, 'mutable': False}, {'num': 8, 'mutable': False}, {'num': 6, 'mutable': False}, {'num': 1, 'mutable': False}, {'num': 7, 'mutable': False}, {'num': 9, 'mutable': False}]
             ]
-            
+
         else:
             self.board = board
 
@@ -45,7 +45,7 @@ class SudokuGame:
 
     def get_username(self):
         return self.username
-    
+
     def get_main_menu(self):
         return self.my_main_menu
 
@@ -81,7 +81,7 @@ class SudokuGame:
                     self.mistakes += 1
                     self.print_board()
                     return False
-        print(f"Move accepted.")         
+        print(f"Move accepted.")
         return True
 
 # -----------------------------------------------------------------
@@ -114,7 +114,7 @@ class SudokuGame:
 
 # -----------------------------------------------------------------
 # SAH: Complete
-    
+
     """
     def print_board(self):
         print("+ — — — + — — — + — — — +")
@@ -139,7 +139,7 @@ class SudokuGame:
         print(f"Mistakes: {self.mistakes} | Time elapsed: {formatted_time}")
         print("- — — — - — — — - — — — -")
     """
-          
+
     def print_board(self):
         print("+ — — — + — — — + — — — +")
         for i, row in enumerate(self.board):
@@ -158,9 +158,9 @@ class SudokuGame:
         elapsed_time = self.previous_elapsed_time + self.my_stopwatch.get_elapsed_time()
         formatted_time = str(datetime.timedelta(seconds=elapsed_time))
         print(f"Mistakes: {self.mistakes} / 3 | Time elapsed: {formatted_time}")
-        print("- — — — - — — — - — — — -") 
-    5
-    
+        print("- — — — - — — — - — — — -")
+
+
 
 # -----------------------------------------------------------------
     def play(self):

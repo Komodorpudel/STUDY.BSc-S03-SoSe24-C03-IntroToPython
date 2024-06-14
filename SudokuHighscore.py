@@ -22,7 +22,7 @@ class SudokuHighscore:
             print(f"Error reading highscores file: {e}")
         return highscores
 
-# ----------------------------------------------------------------- 
+# -----------------------------------------------------------------
     @classmethod
     def get_user_highscore(cls, username):
         highscores = cls.get_highscores()
