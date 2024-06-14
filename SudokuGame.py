@@ -2,18 +2,20 @@ from SudokuPauseMenu import SudokuPauseMenu
 import os
 import datetime
 import time
+from SudokuStopwatch import SudokuStopwatch
 
 class SudokuGame:
     
 # -----------------------------------------------------------------
-    def __init__(self, my_main_menu, difficulty, board = None, username = ""):
+    def __init__(self, my_main_menu, difficulty, board = None, username = "", mistakes=0, total_elapsed_time=0):
         self.board = board
         self.username = username
         self.my_main_menu = my_main_menu
         self.difficulty = difficulty
-        self.my_pause_menu = SudokuPauseMenu(self, self.username, my_main_menu)  # Create the pause menu here
-        self.mistakes = 0
-        self.start_time = time.time()  # Record the start time
+        self.my_pause_menu = SudokuPauseMenu(self, self.username, my_main_menu, difficulty)  # Create the pause menu here
+        self.mistakes = mistakes
+        self.previous_elapsed_time = total_elapsed_time
+        self.my_stopwatch = SudokuStopwatch()
         self.is_paused = False
 
         if board is None:
@@ -31,6 +33,19 @@ class SudokuGame:
             
         else:
             self.board = board
+
+    # Getter functions
+    def get_difficulty(self):
+        return self.difficulty
+
+    def get_board(self):
+        return self.board
+
+    def get_total_elapsed_time(self):
+        return self.previous_elapsed_time + self.my_stopwatch.elapsed_time()
+
+    def get_username(self):
+        return self.username
 
 # -----------------------------------------------------------------
     def is_valid_move(self, row, col, num):
@@ -97,7 +112,32 @@ class SudokuGame:
 
 # -----------------------------------------------------------------
 # SAH: Complete
-"""     def print_board(self):
+    """     
+    def print_board(self):
+    print("+ — — — + — — — + — — — +")
+    for i, row in enumerate(self.board):
+        if i % 3 == 0 and i != 0:
+            print("+ — — — + — — — + — — — +")
+        print("| ", end="")
+        for j, cell in enumerate(row):
+            print(f"DEBUG: cell = {cell}")  # Debug print to check cell type
+            if j % 3 == 0 and j != 0:
+                print("| ", end="")
+            if isinstance(cell, dict) and cell['num'] == 0:
+                print(". ", end="")
+            elif isinstance(cell, dict):
+                print(f"{cell['num']} ", end="")
+            else:
+                print("Error: cell is not a dictionary")
+        print("|")
+    print("+ — — — + — — — + — — — +")
+    elapsed_time = int(time.time() - self.start_time)
+    formatted_time = str(datetime.timedelta(seconds=elapsed_time))
+    print(f"Mistakes: {self.mistakes} | Time elapsed: {formatted_time}")
+    print("- — — — - — — — - — — — -")
+    """
+          
+    def print_board(self):
         print("+ — — — + — — — + — — — +")
         for i, row in enumerate(self.board):
             if i % 3 == 0 and i != 0:
@@ -116,35 +156,12 @@ class SudokuGame:
         formatted_time = str(datetime.timedelta(seconds=elapsed_time))
         print(f"Mistakes: {self.mistakes} / 3| Time elapsed: {formatted_time}")
         print("- — — — - — — — - — — — -")
- """
-
-    def print_board(self):
-        print("+ — — — + — — — + — — — +")
-        for i, row in enumerate(self.board):
-            if i % 3 == 0 and i != 0:
-                print("+ — — — + — — — + — — — +")
-            print("| ", end="")
-            for j, cell in enumerate(row):
-                print(f"DEBUG: cell = {cell}")  # Debug print to check cell type
-                if j % 3 == 0 and j != 0:
-                    print("| ", end="")
-                if isinstance(cell, dict) and cell['num'] == 0:
-                    print(". ", end="")
-                elif isinstance(cell, dict):
-                    print(f"{cell['num']} ", end="")
-                else:
-                    print("Error: cell is not a dictionary")
-            print("|")
-        print("+ — — — + — — — + — — — +")
-        elapsed_time = int(time.time() - self.start_time)
-        formatted_time = str(datetime.timedelta(seconds=elapsed_time))
-        print(f"Mistakes: {self.mistakes} | Time elapsed: {formatted_time}")
-        print("- — — — - — — — - — — — -")
-
+    
 
 # -----------------------------------------------------------------
     def play(self):
         self.print_board()
+        self.my_stopwatch.start() # We start counting
 
         while not self.is_paused:
             try:
@@ -161,6 +178,7 @@ class SudokuGame:
                     if not self.place_number(row, col, num):
                         if self.mistakes >= 3:
                             print("!!!YOU LOSE!!!")
+                            self.my_stopwatch.pause()
                             break
                         print("Try again.")
                     else:
@@ -168,6 +186,7 @@ class SudokuGame:
                         self.print_board()
                         if self.check_win():
                             print("!!!YOU WIN!!!")
+                            self.my_stopwatch.pause()
                             break
                 else:
                     print("Please enter a valid row and column between 1 and 9.")
@@ -175,6 +194,7 @@ class SudokuGame:
                 print("Invalid input. Please enter integers only.")
             if input("Type 'pause' to go back to pause menu or hit enter to continue: ").lower() == 'pause':
                 self.is_paused = True
+                self.my_stopwatch.pause()
                 self.my_pause_menu.display()
 
 # -----------------------------------------------------------------

@@ -85,8 +85,11 @@ class SudokuMainMenu:
             board = []
             mistakes = 0
             elapsed_time = 0
+            difficulty = 0  # Default difficulty
             for line in f:
-                if line.startswith("Mistakes:"):
+                if line.startswith("Difficulty:"):
+                    difficulty = int(line.split(": ")[1])
+                elif line.startswith("Mistakes:"):
                     mistakes = int(line.split(": ")[1])
                 elif line.startswith("Time elapsed:"):
                     elapsed_time_str = line.split(": ")[1].strip()
@@ -96,27 +99,25 @@ class SudokuMainMenu:
                     row = []
                     cells = line.strip().split()
                     for cell in cells:
-                        num, mutable = cell.split(':')
-                        row.append({'num': int(num), 'mutable': bool(int(mutable))})
-                    board.append(row)
-        
-        print("Loaded board:")
+                        if ':' in cell:
+                            num, mutable = cell.split(':')
+                            row.append({'num': int(num), 'mutable': bool(int(mutable))})
+                    if row:
+                        board.append(row)
+
+        # Print out the loaded board for debugging
+        """
+        print("DEBUG: Loaded board:")
         for row in board:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
+        """
 
-        my_game = SudokuGame(self, board, self.username)
+        my_game = SudokuGame(self, difficulty, board, self.username)
         my_game.mistakes = mistakes
         my_game.start_time = time.time() - elapsed_time
         my_game.play()
 
 # -----------------------------------------------------------------
-    def play_game(self, game_path):
-        print(f"Loading game from {game_path}")
-        # Here you would actually load the game state and continue the game
-
-
-# -----------------------------------------------------------------
-
     def view_highscore(self):
         # Highscore viewing logic
         print("+++++ Highscores +++++")
