@@ -1,6 +1,7 @@
 import os
 from SudokuBoardGenerator import SudokuBoardGenerator
 from SudokuGame import SudokuGame
+import time
 
 class SudokuMainMenu:
 
@@ -9,6 +10,7 @@ class SudokuMainMenu:
         print( "\n+++++++++++++ WELCOME! +++++++++++++""")
         self.username = input("Enter your Sudoku name: ")
         self.user_path = f"saves/{self.username}"
+        self.exit_flag = False
         if not os.path.exists(self.user_path):
             os.makedirs(self.user_path)
             print(f'New user "{self.username}" generated.')
@@ -17,7 +19,7 @@ class SudokuMainMenu:
 
 # -----------------------------------------------------------------
     def display_menu(self):
-        while True:
+        while not self.exit_flag:
             menu_title = f"\n++++++ Main Menu (User: {self.username}) ++++++"
             print(menu_title)
             print("1. Start new game")
@@ -38,22 +40,27 @@ class SudokuMainMenu:
                 self.view_highscore()
             elif choice == '4':
                 print("Exiting the game. Goodbye!")
-                break
+                self.exit_flag = True
             else:
                 print("Invalid choice. Please enter 1, 2, 3, or 4.")
 
 # -----------------------------------------------------------------
     def start_new_game(self):
-        print("Starting a new game...")
-        difficulty = int(input("Enter difficulty (0-9): "))
-
-        # my_generator = SudokuBoardGenerator(difficulty)
-        my_game = SudokuGame(self, None, self.user_path)
+        while True:
+            try:
+                difficulty = int(input("Enter difficulty (0-9): "))
+                if 0 <= difficulty <= 9:
+                    break
+                else:
+                    print("Please enter a valid difficulty between 0 and 9.")
+            except ValueError:
+                print("Invalid input. Please enter an integer between 0 and 9.")
+        generated_board = SudokuBoardGenerator.generate_board(difficulty)
+        my_game = SudokuGame(self, difficulty, generated_board, self.username)
         my_game.play()
 
 # -----------------------------------------------------------------
     def load_game(self):
-        # List all saved games for the user
         games = [f for f in os.listdir(self.user_path) if f.endswith('.txt')]
         if games:
             print("\nAvailable saved games:")
@@ -65,14 +72,44 @@ class SudokuMainMenu:
             else:
                 try:
                     selected_game = games[int(game_choice) - 1]
-                    self.play_game(os.path.join(self.user_path, selected_game))
+                    self.load_game_from_file(os.path.join(self.user_path, selected_game))
                 except (IndexError, ValueError):
                     print("Invalid selection.")
         else:
             print("No saved games available.")
 
 # -----------------------------------------------------------------
+    def load_game_from_file(self, game_path):
+        print(f"Loading game from {game_path}")
+        with open(game_path, 'r') as f:
+            board = []
+            mistakes = 0
+            elapsed_time = 0
+            for line in f:
+                if line.startswith("Mistakes:"):
+                    mistakes = int(line.split(": ")[1])
+                elif line.startswith("Time elapsed:"):
+                    elapsed_time_str = line.split(": ")[1].strip()
+                    time_parts = elapsed_time_str.split(':')
+                    elapsed_time = int(time_parts[0]) * 3600 + int(time_parts[1]) * 60 + int(time_parts[2])
+                else:
+                    row = []
+                    cells = line.strip().split()
+                    for cell in cells:
+                        num, mutable = cell.split(':')
+                        row.append({'num': int(num), 'mutable': bool(int(mutable))})
+                    board.append(row)
+        
+        print("Loaded board:")
+        for row in board:
+            print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
 
+        my_game = SudokuGame(self, board, self.username)
+        my_game.mistakes = mistakes
+        my_game.start_time = time.time() - elapsed_time
+        my_game.play()
+
+# -----------------------------------------------------------------
     def play_game(self, game_path):
         print(f"Loading game from {game_path}")
         # Here you would actually load the game state and continue the game
