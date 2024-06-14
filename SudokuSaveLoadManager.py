@@ -1,16 +1,23 @@
 import os
+import datetime
 
 class SudokuSaveLoadManager:
-    def __init__(self, username):
-        self.username = username
-        self.user_path = f"saves/{username}"
-        os.makedirs(self.user_path, exist_ok=True)
 
-    def save_game(self, game):
+# -----------------------------------------------------------------
+    @classmethod
+    def init_user_path(cls, username):
+        user_path = f"saves/{username}"
+        os.makedirs(user_path, exist_ok=True)
+        return user_path
+
+# -----------------------------------------------------------------
+    @classmethod
+    def save_game(cls, game):
+        user_path = cls.init_user_path(game.get_username())
         now = datetime.datetime.now()
         timestamp = now.strftime("%Y%m%d_%H%M%S")
-        game_name = f"{self.username}_{timestamp}.txt"
-        save_path = os.path.join(self.user_path, game_name)
+        game_name = f"{game.get_username()}_{timestamp}.txt"
+        save_path = os.path.join(user_path, game_name)
         with open(save_path, 'w') as f:
             f.write(f"Difficulty: {game.get_difficulty()}\n")
             for row in game.get_board():
@@ -21,7 +28,9 @@ class SudokuSaveLoadManager:
         print(f"Game saved as {game_name}.")
 
 
-    def load_game(self, game_path):
+# -----------------------------------------------------------------
+    @classmethod
+    def load_game(cls, game_path):
         print(f"Loading game from {game_path}")
         with open(game_path, 'r') as f:
             board = []
@@ -34,7 +43,11 @@ class SudokuSaveLoadManager:
                 elif line.startswith("Mistakes:"):
                     mistakes = int(line.split(": ")[1])
                 elif line.startswith("Elapsed time:"):
-                    elapsed_time = int(line.split(": ")[1])
+                    try:
+                        elapsed_time = int(line.split(": ")[1])
+                    except ValueError as e:
+                        print(f"Error parsing elapsed time: {e}")
+                        continue
                 else:
                     row = []
                     cells = line.strip().split()
@@ -46,8 +59,9 @@ class SudokuSaveLoadManager:
                         board.append(row)
 
         # Print out the loaded board for debugging
+        """ 
         print("DEBUG: Loaded board:")
         for row in board:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
-
+        """
         return board, difficulty, mistakes, elapsed_time

@@ -1,11 +1,8 @@
-from SudokuSaveLoadManager import *
+from SudokuSaveLoadManager import SudokuSaveLoadManager
 
 class SudokuPauseMenu:
-    def __init__(self, game, username, main_menu):
+    def __init__(self, game):
         self.game = game
-        self.username = username
-        self.main_menu = main_menu
-        self.save_load_manager = SudokuSaveLoadManager(username)
 
     def display(self):
         while True:
@@ -21,11 +18,11 @@ class SudokuPauseMenu:
                 self.game.print_board()
                 break
             elif choice == '2':
-                self.save_load_manager.save_game(self.game)
+                SudokuSaveLoadManager.save_game(self.game)
                 print("Game saved.")
             elif choice == '3':
                 print("\nReturning to main menu...")
-                self.game.is_paused = True  # Set the game's pause flag
+                self.game.get_main_menu().run_menu()
                 break
             else:
                 print("Invalid choice. Please enter 1, 2, or 3.")

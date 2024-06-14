@@ -1,7 +1,8 @@
 import os
-from SudokuBoardGenerator import SudokuBoardGenerator
-from SudokuGame import SudokuGame
 import time
+from SudokuBoardGenerator import SudokuBoardGenerator
+from SudokuSaveLoadManager import SudokuSaveLoadManager
+from SudokuGame import SudokuGame
 
 class SudokuMainMenu:
 
@@ -18,27 +19,33 @@ class SudokuMainMenu:
             print(f'Welcome back "{self.username}"!')
 
 # -----------------------------------------------------------------
-    def display_menu(self):
+    def run_menu(self):
+        self.exit_flag = False
+
         while not self.exit_flag:
             menu_title = f"\n++++++ Main Menu (User: {self.username}) ++++++"
             print(menu_title)
             print("1. Start new game")
-            print("2. Load unfinished game")
-            print("3. Highscore")
-            print("4. Exit")
+            print("2. Start game with AI player")
+            print("3. Load unfinished game")
+            print("4. Highscore")
+            print("5. Exit")
 
             # Generate a border that matches the length of the menu_title and print it
             border = '+' * len(menu_title.strip())  # Remove the newline for accurate length calculation
             print(border)
-            choice = input("Enter your choice (1-4): ")
+            choice = input("Enter your choice (1-5): ")
 
             if choice == '1':
                 self.start_new_game()
             elif choice == '2':
-                self.load_game()
+                continue
+                # Need to be implemented
             elif choice == '3':
-                self.view_highscore()
+                self.load_game()
             elif choice == '4':
+                self.view_highscore()
+            elif choice == '5':
                 print("Exiting the game. Goodbye!")
                 self.exit_flag = True
             else:
@@ -62,6 +69,7 @@ class SudokuMainMenu:
 # -----------------------------------------------------------------
     def load_game(self):
         games = [f for f in os.listdir(self.user_path) if f.endswith('.txt')]
+        print(f"DEBUG: Available saved games: {games}")  # Debug print
         if games:
             print("\nAvailable saved games:")
             for i, game in enumerate(games, 1):
@@ -71,50 +79,30 @@ class SudokuMainMenu:
                 return
             else:
                 try:
-                    selected_game = games[int(game_choice) - 1]
-                    self.load_game_from_file(os.path.join(self.user_path, selected_game))
-                except (IndexError, ValueError):
-                    print("Invalid selection.")
+                    selected_game_index = int(game_choice) - 1
+                    if 0 <= selected_game_index < len(games):
+                        selected_game = games[selected_game_index]
+                        print(f"DEBUG: Selected game: {selected_game}")  # Debug print
+                        self.load_game_from_file(os.path.join(self.user_path, selected_game))
+                    else:
+                        print("Invalid selection: Index out of range.")
+                except (IndexError, ValueError) as e:
+                    print(f"Invalid selection: {e}")
         else:
             print("No saved games available.")
-
 # -----------------------------------------------------------------
     def load_game_from_file(self, game_path):
-        print(f"Loading game from {game_path}")
-        with open(game_path, 'r') as f:
-            board = []
-            mistakes = 0
-            elapsed_time = 0
-            difficulty = 0  # Default difficulty
-            for line in f:
-                if line.startswith("Difficulty:"):
-                    difficulty = int(line.split(": ")[1])
-                elif line.startswith("Mistakes:"):
-                    mistakes = int(line.split(": ")[1])
-                elif line.startswith("Time elapsed:"):
-                    elapsed_time_str = line.split(": ")[1].strip()
-                    time_parts = elapsed_time_str.split(':')
-                    elapsed_time = int(time_parts[0]) * 3600 + int(time_parts[1]) * 60 + int(time_parts[2])
-                else:
-                    row = []
-                    cells = line.strip().split()
-                    for cell in cells:
-                        if ':' in cell:
-                            num, mutable = cell.split(':')
-                            row.append({'num': int(num), 'mutable': bool(int(mutable))})
-                    if row:
-                        board.append(row)
+        board, difficulty, mistakes, elapsed_time = SudokuSaveLoadManager.load_game(game_path)
 
         # Print out the loaded board for debugging
-        """
+        """         
         print("DEBUG: Loaded board:")
         for row in board:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
         """
 
-        my_game = SudokuGame(self, difficulty, board, self.username)
+        my_game = SudokuGame(self, difficulty, board, self.username, mistakes, elapsed_time)
         my_game.mistakes = mistakes
-        my_game.start_time = time.time() - elapsed_time
         my_game.play()
 
 # -----------------------------------------------------------------
@@ -126,4 +114,4 @@ class SudokuMainMenu:
 # -----------------------------------------------------------------
 if __name__ == "__main__":
     my_main_menu = SudokuMainMenu()
-    my_main_menu.display_menu()
+    my_main_menu.run_menu()
