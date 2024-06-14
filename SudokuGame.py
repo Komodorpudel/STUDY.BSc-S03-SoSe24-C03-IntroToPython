@@ -20,29 +20,49 @@ class SudokuGame:
 
 # -----------------------------------------------------------------
     def is_valid_move(self, row, col, num):
-        
+
         if self.immutable_numbers[row][col]:
-            print("This cell's value is fixed and cannot be changed.")
+            print("This cell's value is given and cannot be changed.")
             return False
-        
+
         for i in range(9):
             if self.board[row][i] == num:
                 print(f"The number {num} is already in this row.")
                 return False
-            
+
             if self.board[i][col] == num:
                 print(f"The number {num} is already in this column.")
                 return False
-            
+
         start_row, start_col = 3 * (row // 3), 3 * (col // 3)
         for i in range(3):
             for j in range(3):
                 if self.board[start_row + i][start_col + j] == num:
                     print(f"The number {num} is already in this block.")
                     return False
-                
+
         print(f"Move accepted.")         
         return True
+
+
+# -----------------------------------------------------------------
+    def check_win(self):
+        full_set = set(range(1, 10))
+        # Check rows and columns
+        for i in range(9):
+            row_set = set(self.board[i])
+            col_set = set(self.board[j][i] for j in range(9))
+            if row_set != full_set or col_set != full_set:
+                return False
+
+        # Check 3x3 squares
+        for x in range(0, 9, 3):
+            for y in range(0, 9, 3):
+                square_set = {self.board[r][c] for r in range(x, x+3) for c in range(y, y+3)}
+                if square_set != full_set:
+                    return False
+        return True
+
 
 # -----------------------------------------------------------------
     def place_number(self, row, col, num):
@@ -50,7 +70,7 @@ class SudokuGame:
             self.board[row][col] = num
             return True
         return False
-    
+
 # -----------------------------------------------------------------
 # SAH: Complete
     def print_board(self):
@@ -78,10 +98,11 @@ class SudokuGame:
                 col = int(input("Enter column (1-9): ")) - 1
                 num = int(input("Enter number (1-9): "))
                 if 0 <= row < 9 and 0 <= col < 9:
-                    if self.place_number(row, col, num):
-                        self.print_board()
+                    if not self.place_number(row, col, num):
+                        print("Try again.")
                     else:
-                        pass
+                        print("Move accepted.")
+                        self.print_board() 
                 else:
                     print("Please enter a valid row and column between 1 and 9.")
             except ValueError:
