@@ -147,6 +147,6 @@ class SudokuGame:
             except ValueError:
                 print("Invalid input. Please enter integers only.")
             if input("Type 'pause' to go back to pause menu or hit enter to continue: ").lower() == 'pause':
-                my_pause_menu.display()
+                self.my_pause_menu.display()
 
 # -----------------------------------------------------------------

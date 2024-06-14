@@ -48,7 +48,7 @@ class SudokuMainMenu:
         difficulty = int(input("Enter difficulty (0-9): "))
 
         # my_generator = SudokuBoardGenerator(difficulty)
-        my_game = SudokuGame(None, self.user_path, my_main_menu)
+        my_game = SudokuGame(self, None, self.user_path)
         my_game.play()
 
 # -----------------------------------------------------------------
