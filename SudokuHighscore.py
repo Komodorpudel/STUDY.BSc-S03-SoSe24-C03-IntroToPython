@@ -22,6 +22,7 @@ class SudokuHighscore:
             print(f"Error reading highscores file: {e}")
         return highscores
 
+
 # -----------------------------------------------------------------
     @classmethod
     def get_user_highscore(cls, username):
@@ -41,6 +42,7 @@ class SudokuHighscore:
             print(f"{user}: {score}")
         print("++++++++++++++++++++++")
 
+
 # -----------------------------------------------------------------
     @classmethod
     def set_highscore(cls, username, score):
@@ -59,6 +61,7 @@ class SudokuHighscore:
                 f.write(f"{user}:{scr}\n")
         return score
 
+
 # -----------------------------------------------------------------
     @classmethod
     def _save_highscores(cls, highscores):
@@ -68,6 +71,4 @@ class SudokuHighscore:
                 file.write(f"{username}:{score}\n")
 
 
-# Example usage
-# Highscore.set_highscore("User1", 100)
-# Highscore.display_highscores()
+# -----------------------------------------------------------------

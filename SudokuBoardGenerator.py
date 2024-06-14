@@ -9,6 +9,7 @@ class SudokuBoardGenerator:
             raise ValueError("Failed to generate a valid Sudoku board.")
         self.remove_numbers(difficulty)
 
+
 # -----------------------------------------------------------------
     def generate_full_board(self):
         def fill(position=0):
@@ -29,6 +30,7 @@ class SudokuBoardGenerator:
             return False
         return fill()
 
+
 # -----------------------------------------------------------------
     def valid_placement(self, row, col, num):
         block_row, block_col = 3 * (row // 3), 3 * (col // 3)
@@ -39,6 +41,7 @@ class SudokuBoardGenerator:
         if any(self.board[r][c]['num'] == num for r in range(block_row, block_row + 3) for c in range(block_col, block_col + 3)):
             return False
         return True
+
 
 # -----------------------------------------------------------------
     def remove_numbers(self, difficulty):
@@ -55,12 +58,17 @@ class SudokuBoardGenerator:
                 if cell['num'] != 0:
                     cell['mutable'] = False
 
+
 # -----------------------------------------------------------------
     def get_board(self):
         return [[cell.copy() for cell in row] for row in self.board]
+
 
 # -----------------------------------------------------------------
     @classmethod
     def generate_board(cls, difficulty=0):
         generator = cls(difficulty)
         return generator.get_board()
+
+
+# -----------------------------------------------------------------

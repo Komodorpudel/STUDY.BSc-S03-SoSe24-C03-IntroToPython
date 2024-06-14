@@ -65,3 +65,6 @@ class SudokuSaveLoadManager:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
         """
         return board, difficulty, mistakes, elapsed_time
+
+
+# -----------------------------------------------------------------

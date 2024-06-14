@@ -1,9 +1,11 @@
 from SudokuSaveLoadManager import SudokuSaveLoadManager
 
 class SudokuPauseMenu:
+# -----------------------------------------------------------------
     def __init__(self, game):
         self.game = game
 
+# -----------------------------------------------------------------
     def display(self):
         while True:
             print("\n++++++ Pause Menu ++++++")
@@ -26,3 +28,5 @@ class SudokuPauseMenu:
                 break
             else:
                 print("Invalid choice. Please enter 1, 2, or 3.")
+
+# -----------------------------------------------------------------

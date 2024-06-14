@@ -49,6 +49,7 @@ class SudokuGame:
     def get_main_menu(self):
         return self.my_main_menu
 
+
 # -----------------------------------------------------------------
     def is_valid_move(self, row, col, num):
 
@@ -83,6 +84,7 @@ class SudokuGame:
                     return False
         print(f"Move accepted.")
         return True
+
 
 # -----------------------------------------------------------------
     def check_win(self):

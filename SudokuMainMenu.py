@@ -18,6 +18,7 @@ class SudokuMainMenu:
         else:
             print(f'Welcome back "{self.username}"!')
 
+
 # -----------------------------------------------------------------
     def run_menu(self):
         self.exit_flag = False
@@ -51,6 +52,7 @@ class SudokuMainMenu:
             else:
                 print("Invalid choice. Please enter 1, 2, 3, or 4.")
 
+
 # -----------------------------------------------------------------
     def start_new_game(self):
         while True:
@@ -65,6 +67,7 @@ class SudokuMainMenu:
         generated_board = SudokuBoardGenerator.generate_board(difficulty)
         my_game = SudokuGame(self, difficulty, generated_board, self.username)
         my_game.play()
+
 
 # -----------------------------------------------------------------
     def load_game(self):
@@ -90,6 +93,8 @@ class SudokuMainMenu:
                     print(f"Invalid selection: {e}")
         else:
             print("No saved games available.")
+
+
 # -----------------------------------------------------------------
     def load_game_from_file(self, game_path):
         board, difficulty, mistakes, elapsed_time = SudokuSaveLoadManager.load_game(game_path)
@@ -105,13 +110,18 @@ class SudokuMainMenu:
         my_game.mistakes = mistakes
         my_game.play()
 
+
 # -----------------------------------------------------------------
     def view_highscore(self):
         # Highscore viewing logic
         print("+++++ Highscores +++++")
         # Here you would fetch and display high scores from a file or database
 
+
 # -----------------------------------------------------------------
 if __name__ == "__main__":
     my_main_menu = SudokuMainMenu()
     my_main_menu.run_menu()
+
+
+# -----------------------------------------------------------------
