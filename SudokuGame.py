@@ -1,8 +1,10 @@
 class SudokuGame:
+    
 # -----------------------------------------------------------------
     def __init__(self, board=None):
         if board is None:
              
+            """             
             self.board = [
                 [5, 3, 4, 6, 7, 8, 9, 1, 0],
                 [6, 7, 2, 1, 9, 5, 3, 4, 8],
@@ -13,7 +15,7 @@ class SudokuGame:
                 [9, 6, 1, 5, 3, 7, 2, 8, 4],
                 [2, 8, 7, 4, 1, 9, 6, 3, 5],
                 [3, 4, 5, 2, 8, 6, 1, 7, 9]
-            ]
+            ] """
 
             """ 
             self.board = [
@@ -122,6 +124,7 @@ class SudokuGame:
                         self.print_board() 
                         if self.check_win():
                             print("!!!YOU WIN!!!")
+
                 else:
                     print("Please enter a valid row and column between 1 and 9.")
             except ValueError:

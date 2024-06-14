@@ -1,0 +1,78 @@
+import os
+import SudokuBoardGenerator
+
+class SudokuMainMenu:
+
+# -----------------------------------------------------------------
+    def __init__(self):
+        self.username = input("Enter your Sudoku name: ")
+        self.user_path = f"saves/{self.username}"
+        if not os.path.exists(self.user_path):
+            os.makedirs(self.user_path)
+
+# -----------------------------------------------------------------
+    def display_menu(self):
+        while True:
+            print("\n++++++ Main Menu ++++++")
+            print("1. Start new game")
+            print("2. Load game")
+            print("3. Highscore")
+            print("4. Exit")
+            print("++++++++++++++++++++++++")
+            choice = input("Enter your choice (1-4): ")
+
+            if choice == '1':
+                self.start_new_game()
+            elif choice == '2':
+                self.load_game()
+            elif choice == '3':
+                self.view_highscore()
+            elif choice == '4':
+                print("Exiting the game. Goodbye!")
+                break
+            else:
+                print("Invalid choice. Please enter 1, 2, 3, or 4.")
+
+# -----------------------------------------------------------------
+    def start_new_game(self):
+        # Here you could add difficulty selection and then initialize the SudokuGame
+        print("Starting a new game...")
+        difficulty = input("Enter the difficulty: ")
+        # Assuming difficulty is selected here or default is used
+        game = SudokuBoardGenerator(difficulty)  # Example with difficulty 5
+        print("Game started. (Here you would run game logic)")
+        # Optionally save the game state on exit or periodically
+
+# -----------------------------------------------------------------
+    def load_game(self):
+        # List all saved games for the user
+        games = [f for f in os.listdir(self.user_path) if f.endswith('.txt')]
+        if games:
+            print("\nAvailable saved games:")
+            for i, game in enumerate(games, 1):
+                print(f"{i}. {game}")
+            game_choice = input("Select a game to load (or type 'back' to return to the main menu): ")
+            if game_choice.lower() == 'back':
+                return
+            else:
+                try:
+                    selected_game = games[int(game_choice) - 1]
+                    self.play_game(os.path.join(self.user_path, selected_game))
+                except (IndexError, ValueError):
+                    print("Invalid selection.")
+        else:
+            print("No saved games available.")
+
+    def play_game(self, game_path):
+        print(f"Loading game from {game_path}")
+        # Here you would actually load the game state and continue the game
+
+    def view_highscore(self):
+        # Highscore viewing logic
+        print("+++++ Highscores +++++")
+        # Here you would fetch and display high scores from a file or database
+
+# -----------------------------------------------------------------
+if __name__ == "__main__":
+    menu = MainMenu()
+    menu.display_menu()
