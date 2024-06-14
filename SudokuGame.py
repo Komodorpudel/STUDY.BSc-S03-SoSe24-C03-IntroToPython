@@ -2,6 +2,20 @@ class SudokuGame:
 # -----------------------------------------------------------------
     def __init__(self, board=None):
         if board is None:
+             
+            self.board = [
+                [5, 3, 4, 6, 7, 8, 9, 1, 0],
+                [6, 7, 2, 1, 9, 5, 3, 4, 8],
+                [1, 9, 8, 3, 4, 2, 5, 6, 7],
+                [8, 5, 9, 7, 6, 1, 4, 2, 3],
+                [4, 2, 6, 8, 5, 3, 7, 9, 1],
+                [7, 1, 3, 9, 2, 4, 8, 5, 6],
+                [9, 6, 1, 5, 3, 7, 2, 8, 4],
+                [2, 8, 7, 4, 1, 9, 6, 3, 5],
+                [3, 4, 5, 2, 8, 6, 1, 7, 9]
+            ]
+
+            """ 
             self.board = [
                 [5, 3, 0, 0, 7, 0, 0, 0, 0],
                 [6, 0, 0, 1, 9, 5, 0, 0, 0],
@@ -13,6 +27,7 @@ class SudokuGame:
                 [0, 0, 0, 4, 1, 9, 0, 0, 5],
                 [0, 0, 0, 0, 8, 0, 0, 7, 9]
             ]
+            """
         else:
             self.board = board
 
@@ -48,7 +63,7 @@ class SudokuGame:
 # -----------------------------------------------------------------
     def check_win(self):
         full_set = set(range(1, 10))
-        
+
         # Check rows and columns
         for i in range(9):
             row_set = set(self.board[i])
@@ -72,13 +87,14 @@ class SudokuGame:
             return True
         return False
 
+
 # -----------------------------------------------------------------
 # SAH: Complete
     def print_board(self):
-        print("— — — — — — — — — — — — —")
+        print("+ — — — + — — — + — — — +")
         for i, row in enumerate(self.board):
             if i % 3 == 0 and i != 0:
-                print("— — — — — — — — — — — — —")
+                print("+ — — — + — — — + — — — +")
             print("| ", end="")
             for j, num in enumerate(row):
                 if j % 3 == 0 and j != 0:
@@ -88,7 +104,7 @@ class SudokuGame:
                 else:
                     print(f"{num} ", end="")
             print("|")
-        print("— — — — — — — — — — — —")
+        print("+ — — — + — — — + — — — +")
 
 # -----------------------------------------------------------------
     def play(self):
@@ -104,6 +120,8 @@ class SudokuGame:
                     else:
                         print("Move accepted.")
                         self.print_board() 
+                        if self.check_win():
+                            print("!!!YOU WIN!!!")
                 else:
                     print("Please enter a valid row and column between 1 and 9.")
             except ValueError:
