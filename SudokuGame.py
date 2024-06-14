@@ -111,6 +111,7 @@ class SudokuGame:
 # -----------------------------------------------------------------
     def play(self):
         self.print_board()
+
         while True:
             try:
                 row = int(input("Enter row (1-9): ")) - 1
@@ -133,8 +134,3 @@ class SudokuGame:
                 break
 
 # -----------------------------------------------------------------
-
-# To play the game in a terminal
-if __name__ == "__main__":
-    game = SudokuGame()
-    game.play()
