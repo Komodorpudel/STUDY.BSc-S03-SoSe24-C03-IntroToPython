@@ -5,20 +5,28 @@ class SudokuMainMenu:
 
 # -----------------------------------------------------------------
     def __init__(self):
+        print( "\n+++++++++++++ WELCOME! +++++++++++++""")
         self.username = input("Enter your Sudoku name: ")
         self.user_path = f"saves/{self.username}"
         if not os.path.exists(self.user_path):
             os.makedirs(self.user_path)
+            print(f'New user "{self.username}" generated.')
+        else:
+            print(f'Welcome back "{self.username}"!')
 
 # -----------------------------------------------------------------
     def display_menu(self):
         while True:
-            print("\n++++++ Main Menu ++++++")
+            menu_title = f"\n++++++ Main Menu (User: {self.username}) ++++++"
+            print(menu_title)
             print("1. Start new game")
-            print("2. Load game")
+            print("2. Load unfinished game")
             print("3. Highscore")
             print("4. Exit")
-            print("++++++++++++++++++++++++")
+
+            # Generate a border that matches the length of the menu_title and print it
+            border = '+' * len(menu_title.strip())  # Remove the newline for accurate length calculation
+            print(border)
             choice = input("Enter your choice (1-4): ")
 
             if choice == '1':
@@ -74,5 +82,5 @@ class SudokuMainMenu:
 
 # -----------------------------------------------------------------
 if __name__ == "__main__":
-    menu = MainMenu()
+    menu = SudokuMainMenu()
     menu.display_menu()
