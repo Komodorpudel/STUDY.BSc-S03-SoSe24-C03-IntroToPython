@@ -69,6 +69,7 @@ class SudokuMainMenu:
         my_game = SudokuGame(self, difficulty, generated_board, self.username)
         my_game.play()
 
+
 # -----------------------------------------------------------------
     def start_new_game_with_ai(self):
         while True:
@@ -84,6 +85,7 @@ class SudokuMainMenu:
         my_game = SudokuGame(self, difficulty, generated_board, self.username)
         my_ai = SudokuAI(my_game)
         my_game.play_with_ai(my_ai)
+
 
 # -----------------------------------------------------------------
     def load_game(self):
