@@ -3,6 +3,7 @@ import time
 from SudokuBoardGenerator import SudokuBoardGenerator
 from SudokuSaveLoadManager import SudokuSaveLoadManager
 from SudokuGame import SudokuGame
+from SudokuHighscore import *
 
 class SudokuMainMenu:
 
@@ -115,8 +116,13 @@ class SudokuMainMenu:
     def view_highscore(self):
         # Highscore viewing logic
         print("+++++ Highscores +++++")
-        # Here you would fetch and display high scores from a file or database
-
+        SudokuHighscore.display_highscores()
+        print("+++ Highscores End +++")
+        
+        while True:
+            choice = input("Enter 5 to return to main menu: ")
+            if choice == '5':
+                break
 
 # -----------------------------------------------------------------
 if __name__ == "__main__":

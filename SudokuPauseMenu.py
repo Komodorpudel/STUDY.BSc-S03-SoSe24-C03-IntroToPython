@@ -12,12 +12,12 @@ class SudokuPauseMenu:
             print("1. Resume game")
             print("2. Save game")
             print("3. Return to main menu")
-            print("\n++++++++++++++++++++")
+            print("+++++++++++++++++++++++")
             choice = input("Enter your choice (1-3): ")
 
             if choice == '1':
                 print("\nResuming game...")
-                self.game.print_board()
+                self.game.play()
                 break
             elif choice == '2':
                 SudokuSaveLoadManager.save_game(self.game)

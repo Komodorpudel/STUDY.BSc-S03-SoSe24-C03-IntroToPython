@@ -16,6 +16,7 @@ class SudokuGame:
         self.previous_elapsed_time = total_elapsed_time
         self.my_stopwatch = SudokuStopwatch()
         self.is_paused = False
+        self.my_stopwatch.start() # We start counting
 
         if board is None:
             self.board = [
@@ -165,15 +166,17 @@ class SudokuGame:
 
 # -----------------------------------------------------------------
     def play(self):
+        self.is_paused = False
         self.print_board()
-        self.my_stopwatch.start() # We start counting
 
         while not self.is_paused:
             try:
                 row_input = input("Enter row (1-9) or 'pause': ").strip().lower()
                 if row_input == 'pause':
+                    self.is_paused = True
                     self.my_pause_menu.display()
-                    continue
+                    break
+
                 row = int(row_input)
                 col = int(input("Enter column (1-9): ").strip())
                 num = int(input("Enter number (1-9): ").strip())
@@ -183,23 +186,24 @@ class SudokuGame:
                     if not self.place_number(row, col, num):
                         if self.mistakes >= 3:
                             print("!!!YOU LOSE!!!")
+                            self.my_stopwatch.pause()
                             print(f"Score substracted: {self.difficulty * -1}")
                             SudokuHighscore.set_highscore(self.username, self.difficulty * -1)
                             highscore = SudokuHighscore.get_user_highscore(self.username)
                             print(f"New total score: {highscore}")
-                            self.my_stopwatch.pause()
                             break
+
                         print("Try again.")
                     else:
                         print("Move accepted.")
                         self.print_board()
                         if self.check_win():
                             print("!!!YOU WIN!!!")
+                            self.my_stopwatch.pause()
                             print(f"Score added: {self.difficulty}")
                             SudokuHighscore.set_highscore(self.username, self.difficulty)
                             highscore = SudokuHighscore.get_user_highscore(self.username)
                             print(f"New total score: {highscore}")
-                            self.my_stopwatch.pause()
                             break
 
                 else:

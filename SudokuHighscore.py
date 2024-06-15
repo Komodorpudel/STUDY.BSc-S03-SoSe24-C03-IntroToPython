@@ -40,7 +40,6 @@ class SudokuHighscore:
         print("\n+++++ Highscores +++++")
         for user, score in highscores:
             print(f"{user}: {score}")
-        print("++++++++++++++++++++++")
 
 
 # -----------------------------------------------------------------
