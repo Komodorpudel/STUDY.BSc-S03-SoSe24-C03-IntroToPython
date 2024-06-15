@@ -82,7 +82,7 @@ class SudokuGame:
                     self.mistakes += 1
                     self.print_board()
                     return False
-        print(f"Move accepted.")
+        print("Move accepted.")
         return True
 
 
@@ -163,7 +163,6 @@ class SudokuGame:
         print("- — — — - — — — - — — — -")
 
 
-
 # -----------------------------------------------------------------
     def play(self):
         self.print_board()
@@ -211,5 +210,6 @@ class SudokuGame:
                 self.is_paused = True
                 self.my_stopwatch.pause()
                 self.my_pause_menu.display()
+
 
 # -----------------------------------------------------------------
