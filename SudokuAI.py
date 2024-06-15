@@ -1,10 +1,14 @@
 import time
 
 class SudokuAI:
+
+# -----------------------------------------------------------------
     def __init__(self, game):
         self.game = game
         self.board = None
 
+
+# -----------------------------------------------------------------
     def decide_move(self):
         # Analyze the board and return the next move as (row, col, num)
         self.board = self.game.get_board()
@@ -18,6 +22,8 @@ class SudokuAI:
                             return (row, col, num)
         return None
 
+
+# -----------------------------------------------------------------
     def valid_move(self, row, col, num):
         if not self.board[row][col]['mutable']:
             return False
@@ -36,3 +42,6 @@ class SudokuAI:
                     # print(f"The number {num} is already in this block.")
                     return False
         return True
+
+
+# -----------------------------------------------------------------
