@@ -4,6 +4,7 @@ from SudokuBoardGenerator import SudokuBoardGenerator
 from SudokuSaveLoadManager import SudokuSaveLoadManager
 from SudokuGame import SudokuGame
 from SudokuHighscore import *
+from SudokuAI import *
 
 class SudokuMainMenu:
 
@@ -41,8 +42,7 @@ class SudokuMainMenu:
             if choice == '1':
                 self.start_new_game()
             elif choice == '2':
-                continue
-                # Need to be implemented
+                self.start_new_game_with_ai()
             elif choice == '3':
                 self.load_game()
             elif choice == '4':
@@ -69,6 +69,21 @@ class SudokuMainMenu:
         my_game = SudokuGame(self, difficulty, generated_board, self.username)
         my_game.play()
 
+# -----------------------------------------------------------------
+    def start_new_game_with_ai(self):
+        while True:
+            try:
+                difficulty = int(input("Enter difficulty wih ai should solve (0-9): "))
+                if 0 <= difficulty <= 9:
+                    break
+                else:
+                    print("Please enter a valid difficulty between 0 and 9.")
+            except ValueError:
+                print("Invalid input. Please enter an integer between 0 and 9.")
+        generated_board = SudokuBoardGenerator.generate_board(difficulty)
+        my_game = SudokuGame(self, difficulty, generated_board, self.username)
+        my_ai = SudokuAI(my_game)
+        my_game.play_with_ai(my_ai)
 
 # -----------------------------------------------------------------
     def load_game(self):

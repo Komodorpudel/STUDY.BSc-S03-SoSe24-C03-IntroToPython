@@ -1,48 +1,38 @@
-import subprocess
 import time
 
 class SudokuAI:
     def __init__(self, game):
         self.game = game
-        
-    def make_move(self):
-        # Logic to determine the best move
-        # For simplicity, we're just choosing a random move that's valid
+        self.board = None
+
+    def decide_move(self):
+        # Analyze the board and return the next move as (row, col, num)
+        self.board = self.game.get_board()
+        time.sleep(2)  # Simulate think time
+
         for row in range(9):
             for col in range(9):
-                if self.game.is_valid_move(row, col, 1):  # Checking for a valid move
-                    self.game.place_number(row, col, 1)
-                    return True
-        return False
+                if self.board[row][col]['num'] == 0:  # Find the first empty spot
+                    for num in range(1, 10):  # Try numbers 1-9
+                        if self.valid_move(row, col, num):
+                            return (row, col, num)
+        return None
 
-# Usage
-game = SudokuGame()  # Assuming this is your game class
-ai = SudokuAI(game)
-while not game.check_win():
-    ai.make_move()
-    game.print_board()
+    def valid_move(self, row, col, num):
+        if not self.board[row][col]['mutable']:
+            return False
+        for i in range(9):
+            if self.board[row][i]['num'] == num:
+                # print(f"The number {num} is already in this row.")
+                return False
+            if self.board[i][col]['num'] == num:
+                # print(f"The number {num} is already in this column.")
+                return False
 
-def simulate_ai_interaction():
-    # Start the game process
-    process = subprocess.Popen(['python', 'sudoku_game.py'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-
-    while True:
-        output = process.stdout.readline()
-        print(output.strip())
-        if "Enter row" in output:
-            # Simulate entering a valid row number
-            process.stdin.write('1\n')
-            process.stdin.flush()
-        elif "Enter column" in output:
-            # Simulate entering a valid column number
-            process.stdin.write('1\n')
-            process.stdin.flush()
-        elif "Enter number" in output:
-            # Simulate entering a valid number
-            process.stdin.write('5\n')
-            process.stdin.flush()
-        elif "YOU WIN" in output or "YOU LOSE" in output:
-            break
-        time.sleep(1)  # Slow down the loop for demonstration purposes
-
-simulate_ai_interaction()
+        start_row, start_col = 3 * (row // 3), 3 * (col // 3)
+        for i in range(3):
+            for j in range(3):
+                if self.board[start_row + i][start_col + j]['num'] == num:
+                    # print(f"The number {num} is already in this block.")
+                    return False
+        return True

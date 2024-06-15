@@ -217,3 +217,23 @@ class SudokuGame:
 
 
 # -----------------------------------------------------------------
+    def play_with_ai(self, ai_player):
+        """Run the game with AI making moves."""
+        self.print_board()
+        while not self.check_win():
+            move = ai_player.decide_move()
+            if move:
+                row, col, num = move
+                if self.is_valid_move(row, col, num):
+                    self.place_number(row, col, num)
+                    print(f"AI placed {num} at ({row+1}, {col+1})")
+                    self.print_board()
+                if self.check_win():
+                    print("AI wins!")
+                    break
+            else:
+                print("AI could not make a valid move.")
+                break
+
+
+# -----------------------------------------------------------------
