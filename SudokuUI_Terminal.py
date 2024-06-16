@@ -4,8 +4,8 @@ class SudokuUI_Terminal(SudokuUI):
     def welcome_screen(self):
         print("Welcome to Sudoku!")
         username = input("Enter your username: ")
-        password = input("Enter your password: ")  # For simplicity; in practice, handle passwords securely
-        return username, password
+        # password = input("Enter your password: ")  # For simplicity; in practice, handle passwords securely
+        return username, # password
 
     def display_main_menu(self):
         print("1. Start New Game")

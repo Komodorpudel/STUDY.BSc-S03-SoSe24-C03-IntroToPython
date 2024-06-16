@@ -135,7 +135,7 @@ class SudokuMainMenu:
         print("+++++ Highscores +++++")
         SudokuHighscore.display_highscores()
         print("+++ Highscores End +++")
-        
+
         while True:
             choice = input("Enter 5 to return to main menu: ")
             if choice == '5':
