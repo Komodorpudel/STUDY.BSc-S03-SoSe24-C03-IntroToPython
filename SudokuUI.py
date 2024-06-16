@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class SudokuUI(ABC):
     @abstractmethod
     def welcome_screen(self):
-        """Display a welcome screen and handle user authentication."""
+        """Display a welcome screen for user authentication."""
         pass
 
     @abstractmethod
@@ -12,7 +12,7 @@ class SudokuUI(ABC):
         pass
 
     @abstractmethod
-    def display_game_board(self, board):
+    def display_board(self, board):
         """Display the game board."""
         pass
 

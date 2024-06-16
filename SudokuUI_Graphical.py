@@ -1,41 +1,49 @@
-import SudokuUI
+import tkinter as tk
+from tkinter import simpledialog, messagebox
 
-class SudokuTUI(SudokuUI):
-    def welcome_screen(self):
-        print("Welcome to Sudoku!")
-        username = input("Enter your username: ")
-        password = input("Enter your password: ")  # For simplicity; in practice, handle passwords securely
-        return username, password
+class SudokuGUI(SudokuUI):
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Sudoku Game")
+        self.setup_welcome_screen()
+
+    def setup_welcome_screen(self):
+        self.clear_screen()
+        tk.Label(self.root, text="Welcome to Sudoku!").pack()
+        username = simpledialog.askstring("Username", "Enter your username:")
+        password = simpledialog.askstring("Password", "Enter your password:", show='*')
+        self.display_main_menu()
 
     def display_main_menu(self):
-        print("1. Start New Game")
-        print("2. Load Game")
-        print("3. View Highscores")
-        print("4. Exit")
-        return input("Enter your choice: ")
+        self.clear_screen()
+        tk.Button(self.root, text="Start New Game", command=self.display_game_board).pack()
+        tk.Button(self.root, text="Load Game", command=self.display_load_menu).pack()
+        tk.Button(self.root, text="View Highscores", command=self.display_highscores).pack()
+        tk.Button(self.root, text="Exit", command=self.root.quit).pack()
 
-    def display_game_board(self, board):
-        for row in board:
-            print(' '.join(str(x) for x in row))
-        print()
+    def display_board(self):
+        self.clear_screen()
+        # Display the board here
 
     def get_user_input(self):
-        return input("Enter your move (row col num): ")
+        return simpledialog.askstring("Input", "Enter your move (row col num):")
 
     def display_message(self, message):
-        print(message)
+        messagebox.showinfo("Message", message)
 
     def display_pause_menu(self):
-        print("1. Resume Game")
-        print("2. Save Game")
-        print("3. Quit to Main Menu")
-        return input("Choose an option: ")
+        self.clear_screen()
+        tk.Button(self.root, text="Resume Game", command=self.display_game_board).pack()
+        tk.Button(self.root, text="Save Game", command=lambda: self.display_message("Save Game not implemented")).pack()
+        tk.Button(self.root, text="Quit to Main Menu", command=self.display_main_menu).pack()
 
     def display_load_menu(self):
-        print("Select a saved game to load:")
-        # Example: List saved games
-        return input("Enter the file name to load: ")
+        self.clear_screen()
+        # Implementation for load menu
 
     def display_highscores(self):
-        print("Current Highscores:")
-        # Example: Fetch and display highscores
+        self.clear_screen()
+        # Implementation for displaying highscores
+
+    def clear_screen(self):
+        for widget in self.root

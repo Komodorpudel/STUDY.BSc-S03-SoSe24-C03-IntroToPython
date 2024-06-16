@@ -1,14 +1,16 @@
 from SudokuPauseMenu import SudokuPauseMenu
-import datetime
+
 from SudokuStopwatch import SudokuStopwatch
 from SudokuHighscore import *
+from 
 
 class SudokuGame:
 
 # -----------------------------------------------------------------
-    def __init__(self, my_main_menu, difficulty, board = None, username = "", mistakes=0, total_elapsed_time=0):
+    def __init__(self, ui, my_main_menu, difficulty, board = None, username = "", mistakes=0, total_elapsed_time=0):
         self.board = board
         self.username = username
+        self.ui = ui
         self.my_main_menu = my_main_menu
         self.difficulty = difficulty
         self.my_pause_menu = SudokuPauseMenu(self)  # Create the pause menu here
@@ -40,6 +42,9 @@ class SudokuGame:
 
     def get_board(self):
         return self.board
+    
+    def get_mistakes(self):
+        return self.mistakes
 
     def get_total_elapsed_time(self):
         return self.previous_elapsed_time + self.my_stopwatch.get_elapsed_time()
@@ -55,33 +60,29 @@ class SudokuGame:
     def is_valid_move(self, row, col, num):
 
         if not self.board[row][col]['mutable']:
-            print("-------------------------------------")
-            print("This cell's value is given and cannot be changed.")
-            self.print_board()
+            self.ui.display_message("This cell's value is given and cannot be changed.")
+            self.ui.display_board()
             return False
 
         for i in range(9):
             if self.board[row][i]['num'] == num:
-                print("-------------------------------------")
-                print(f"The number {num} is already in this row.")
+                self.ui.display_message(f"The number {num} is already in this row.")
                 self.mistakes += 1
-                self.print_board()
+                self.ui.display_board()
                 return False
             if self.board[i][col]['num'] == num:
-                print("-------------------------------------")
-                print(f"The number {num} is already in this column.")
+                self.ui.display_message(f"The number {num} is already in this column.")
                 self.mistakes += 1
-                self.print_board()
+                self.ui.display_board()
                 return False
 
         start_row, start_col = 3 * (row // 3), 3 * (col // 3)
         for i in range(3):
             for j in range(3):
                 if self.board[start_row + i][start_col + j]['num'] == num:
-                    print("-------------------------------------")
-                    print(f"The number {num} is already in this block.")
+                    self.ui.display_message(f"The number {num} is already in this block.")
                     self.mistakes += 1
-                    self.print_board()
+                    self.ui.display_board()
                     return False
         print("Move accepted.")
         return True
@@ -142,27 +143,6 @@ class SudokuGame:
         print(f"Mistakes: {self.mistakes} | Time elapsed: {formatted_time}")
         print("- — — — - — — — - — — — -")
     """
-
-    def print_board(self):
-        print("+ — — — + — — — + — — — +")
-        for i, row in enumerate(self.board):
-            if i % 3 == 0 and i != 0:
-                print("+ — — — + — — — + — — — +")
-            print("| ", end="")
-            for j, cell in enumerate(row):
-                if j % 3 == 0 and j != 0:
-                    print("| ", end="")
-                if cell['num'] == 0:
-                    print(". ", end="")
-                else:
-                    print(f"{cell['num']} ", end="")
-            print("|")
-        print("+ — — — + — — — + — — — +")
-        elapsed_time = self.previous_elapsed_time + self.my_stopwatch.get_elapsed_time()
-        formatted_time = str(datetime.timedelta(seconds=elapsed_time))
-        print(f"Mistakes: {self.mistakes} / 3 | Time elapsed: {formatted_time}")
-        print("- — — — - — — — - — — — -")
-
 
 # -----------------------------------------------------------------
     def play(self):
