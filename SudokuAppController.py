@@ -22,9 +22,11 @@ class SudokuAppController:
     def get_ui(self):
         return self.ui
 
+
 # -----------------------------------------------------------------
     def get_user(self):
         return self.user
+
 
 # -----------------------------------------------------------------
     def run_welcome_menu(self):
