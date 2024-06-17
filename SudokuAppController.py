@@ -14,6 +14,7 @@ class SudokuAppController:
         self.ui = ui
         self.game = None  # This will be a GameLogic instance, given when we start game
         self.user = None
+        self.user_save_path = None
         self.SaveLoadManager = None
 
 
@@ -29,12 +30,12 @@ class SudokuAppController:
     def run_welcome_menu(self):
             self.user = self.ui.display_welcome_menu()
 
-            self.user_path = f"saves/{self.user}"
+            self.user_save_path = f"saves/{self.user}"
             # self.exit_flag = False
 
             # Create directly if not existing - DIRTY
-            if not os.path.exists(self.user_path):
-                os.makedirs(self.user_path)
+            if not os.path.exists(self.user_save_path):
+                os.makedirs(self.user_save_path)
                 self.ui.display_message(f'New user "{self.user}" generated.')
             else:
                 self.ui.display_message(f'Welcome back "{self.user}"!')
@@ -122,8 +123,8 @@ class SudokuAppController:
 
 # -----------------------------------------------------------------
     def run_load_game_menu(self):
-        games = [f for f in os.listdir(self.user_path) if f.endswith('.txt')]
-        print(f"DEBUG: Available saved games: {games}")  # Debug print
+        games = [f for f in os.listdir(self.user_save_path) if f.endswith('.txt')]
+        # print(f"DEBUG: Available saved games: {games}")  # Debug print
         if games:
             print("\nAvailable saved games:")
             for i, game in enumerate(games, 1):
@@ -137,7 +138,7 @@ class SudokuAppController:
                     if 0 <= selected_game_index < len(games):
                         selected_game = games[selected_game_index]
                         print(f"DEBUG: Selected game: {selected_game}")  # Debug print
-                        self.load_game_from_file(os.path.join(self.user_path, selected_game))
+                        self.load_game_from_file(os.path.join(self.user_save_path, selected_game))
                     else:
                         print("Invalid selection: Index out of range.")
                 except (IndexError, ValueError) as e:
@@ -148,6 +149,7 @@ class SudokuAppController:
 
 # -----------------------------------------------------------------
     def load_game_from_file(self, game_path):
+
         self.game = SudokuSaveLoadManager.load_game(game_path)
 
         # Print out the loaded board for debugging
