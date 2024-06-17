@@ -18,7 +18,7 @@ class SudokuUI(ABC):
         pass
 
     @abstractmethod
-    def display_board(self, current_game):
+    def display_board(self):
         """Display the game board."""
         pass
 

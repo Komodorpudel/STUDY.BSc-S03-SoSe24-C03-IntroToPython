@@ -43,9 +43,11 @@ class SudokuUI_Terminal(SudokuUI):
 
 
 # -----------------------------------------------------------------
-    def display_board(self, current_game):
+    def display_board(self):
+        print(self.border)
+        print(f"Mistakes: {self.user}'s current game | Difficulty: {self.game.get_difficulty()}")
         print("+ — — — + — — — + — — — +")
-        for i, row in enumerate(current_game.get_board()):
+        for i, row in enumerate(self.game.get_board()):
             if i % 3 == 0 and i != 0:
                 print("+ — — — + — — — + — — — +")
             print("| ", end="")
@@ -58,10 +60,10 @@ class SudokuUI_Terminal(SudokuUI):
                     print(f"{cell['num']} ", end="")
             print("|")
         print("+ — — — + — — — + — — — +")
-        elapsed_time = current_game.get_total_elapsed_time()
+        elapsed_time = self.game.get_total_elapsed_time()
         formatted_time = str(datetime.timedelta(seconds=elapsed_time))
-        print(f"Mistakes: {current_game.get_mistakes()} / 3 | Time elapsed: {formatted_time}")
-        print("- — — — - — — — - — — — -")
+        print(f"Mistakes: {self.game.get_mistakes()} / 3 | Time elapsed: {formatted_time}")
+        print(self.border)
 
 
 # -----------------------------------------------------------------
@@ -84,7 +86,8 @@ class SudokuUI_Terminal(SudokuUI):
 # -----------------------------------------------------------------
     def display_highscore_menu(self):
         highscores = SudokuHighscore.get_highscores()
-        print("\n+++++Highscores +++++")
+        title = " Highscores "
+        print("\n" + title.center(self.menu_width, '+'))
         for user, score in highscores:
             print(f"{user}: {score}")
         print(self.border)

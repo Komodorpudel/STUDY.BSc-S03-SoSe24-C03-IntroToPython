@@ -117,7 +117,7 @@ class SudokuGame:
 # -----------------------------------------------------------------
     def play(self):
         self.is_paused = False
-        self.ui.display_board(self)
+        self.ui.display_board()
 
         while not self.is_paused:
             try:
