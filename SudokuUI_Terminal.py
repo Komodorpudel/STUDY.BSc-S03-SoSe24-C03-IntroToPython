@@ -3,8 +3,8 @@ import datetime
 from SudokuGame import *
 
 """
-Only handels print and returns something.
-No logic checks are done here.
+Only handels print and/or returns something.
+No game logic checks are done here.
 """
 
 class SudokuUI_Terminal(SudokuUI):
@@ -20,7 +20,7 @@ class SudokuUI_Terminal(SudokuUI):
 # -----------------------------------------------------------------
     def display_main_menu(self):
         print("1. Start New Game")
-        print("2. Load Game")
+        print("2. Load unfinished Game")
         print("3. View Highscores")
         print("4. Exit")
         return input("Enter your choice: ")
@@ -54,7 +54,16 @@ class SudokuUI_Terminal(SudokuUI):
 
 # -----------------------------------------------------------------
     def get_next_move(self):
-        return input("Enter your move (row col num): ")
+        row, col, num = None, None, None
+
+        row_input = input("Enter row (1-9) or 'pause': ").strip().lower()
+        if row_input == 'pause':
+            return row_input
+
+        row = int(row_input)
+        col = int(input("Enter column (1-9): ").strip())
+        num = int(input("Enter number (1-9): ").strip())
+        return row, col, num
 
 
 # -----------------------------------------------------------------

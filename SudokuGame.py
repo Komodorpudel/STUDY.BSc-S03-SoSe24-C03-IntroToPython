@@ -2,7 +2,6 @@ from SudokuPauseMenu import SudokuPauseMenu
 
 from SudokuStopwatch import SudokuStopwatch
 from SudokuHighscore import *
-from 
 
 class SudokuGame:
 
@@ -57,23 +56,24 @@ class SudokuGame:
 
 
 # -----------------------------------------------------------------
+# DONE
     def is_valid_move(self, row, col, num):
 
         if not self.board[row][col]['mutable']:
             self.ui.display_message("This cell's value is given and cannot be changed.")
-            self.ui.display_board()
+            self.ui.display_board(self)
             return False
 
         for i in range(9):
             if self.board[row][i]['num'] == num:
                 self.ui.display_message(f"The number {num} is already in this row.")
                 self.mistakes += 1
-                self.ui.display_board()
+                self.ui.display_board(self)
                 return False
             if self.board[i][col]['num'] == num:
                 self.ui.display_message(f"The number {num} is already in this column.")
                 self.mistakes += 1
-                self.ui.display_board()
+                self.ui.display_board(self)
                 return False
 
         start_row, start_col = 3 * (row // 3), 3 * (col // 3)
@@ -82,7 +82,7 @@ class SudokuGame:
                 if self.board[start_row + i][start_col + j]['num'] == num:
                     self.ui.display_message(f"The number {num} is already in this block.")
                     self.mistakes += 1
-                    self.ui.display_board()
+                    self.ui.display_board(self)
                     return False
         self.ui.display_message("Move accepted.")
         return True
@@ -148,20 +148,15 @@ class SudokuGame:
 # -----------------------------------------------------------------
     def play(self):
         self.is_paused = False
-        self.ui.display_board()
+        self.ui.display_board(self)
 
         while not self.is_paused:
             try:
-
-                row_input = input("Enter row (1-9) or 'pause': ").strip().lower()
+                row, col, num = self.ui.get_next_move()
                 if row_input == 'pause':
                     self.is_paused = True
                     self.my_pause_menu.display()
                     break
-
-                row = int(row_input)
-                col = int(input("Enter column (1-9): ").strip())
-                num = int(input("Enter number (1-9): ").strip())
 
                 row, col = row - 1, col - 1
                 if 0 <= row < 9 and 0 <= col < 9:
@@ -202,7 +197,7 @@ class SudokuGame:
 # DONE
     def play_with_ai(self, ai_player):
         """Run the game with AI making moves."""
-        self.print_board()
+        self.ui.display_board(self)
         while not self.check_win():
             move = ai_player.decide_move()
             if move:
