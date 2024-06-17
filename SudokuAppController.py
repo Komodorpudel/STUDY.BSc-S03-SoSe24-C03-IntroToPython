@@ -36,10 +36,9 @@ class SudokuAppController:
 # -----------------------------------------------------------------
 # DONE
     def run_main_menu(self):
-        self.exit_flag = False
-        while not self.exit_flag:
-            choice = self.ui.display_main_menu()
-
+        choice = self.ui.display_main_menu()
+        
+        while True:
             if choice == '1':
                 self.run_new_game_menu()
             elif choice == '2':
@@ -50,7 +49,6 @@ class SudokuAppController:
                 self.run_highscore_menu()
             elif choice == '5':
                 self.ui.display_message("Exiting the game. Goodbye!")
-                self.exit_flag = True
             else:
                 # Not really relevant for GUI since we can limit input options
                 self.ui.display_message("Invalid choice. Please enter 1, 2, 3, 4, or 5.")

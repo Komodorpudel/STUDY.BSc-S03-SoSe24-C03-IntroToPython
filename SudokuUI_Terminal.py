@@ -9,7 +9,6 @@ No game logic checks are done here.
 
 class SudokuUI_Terminal(SudokuUI):
 
-
 # -----------------------------------------------------------------
     def __init__(self, game=None, user=None):
         self.game = game
@@ -45,7 +44,7 @@ class SudokuUI_Terminal(SudokuUI):
 # -----------------------------------------------------------------
     def display_board(self):
         print(self.border)
-        print(f"Mistakes: {self.user}'s current game | Difficulty: {self.game.get_difficulty()}")
+        print(f"{self.user}'s current game | Difficulty: {self.game.get_difficulty()} / 9")
         print("+ — — — + — — — + — — — +")
         for i, row in enumerate(self.game.get_board()):
             if i % 3 == 0 and i != 0:
