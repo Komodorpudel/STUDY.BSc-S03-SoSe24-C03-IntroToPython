@@ -9,10 +9,13 @@ No game logic checks are done here.
 
 class SudokuUI_Terminal(SudokuUI):
 
+
 # -----------------------------------------------------------------
     def __init__(self, game=None, user=None):
         self.game = game
         self.user = user
+        self.menu_width = 0
+        self.border = None
 
 
 # -----------------------------------------------------------------
@@ -25,7 +28,9 @@ class SudokuUI_Terminal(SudokuUI):
 
 # -----------------------------------------------------------------
     def display_main_menu(self):
-        menu_title = f"\n++++++ Main Menu (User: {self.user}) ++++++"
+        menu_title = f"\n++++++++++ Main Menu (User: {self.user}) +++++++++++"
+        self.menu_width = len(menu_title.strip())
+        self.border = '+' * self.menu_width # Remove the newline for accurate length calculation
         print(menu_title)
         print("1. Start new game")
         print("2. Start game with AI player")
@@ -33,11 +38,9 @@ class SudokuUI_Terminal(SudokuUI):
         print("4. Highscore")
         print("5. Exit")
 
-        # Generate a border that matches the length of the menu_title and print it
-        border = '+' * len(menu_title.strip())  # Remove the newline for accurate length calculation
-        print(border)
+        print(self.border)
         return input("Enter your choice (1-5): ")
-    
+
 
 # -----------------------------------------------------------------
     def display_board(self, current_game):
@@ -63,11 +66,11 @@ class SudokuUI_Terminal(SudokuUI):
 
 # -----------------------------------------------------------------
     def display_pause_menu(self):
-        print("\n++++++ Pause Menu ++++++")
+        print(self.border)
         print("1. Resume game")
         print("2. Save game")
         print("3. Return to main menu")
-        print("+++++++++++++++++++++++")
+        print(self.border)
         return input("Enter your choice (1-3): ")
 
 
@@ -79,8 +82,12 @@ class SudokuUI_Terminal(SudokuUI):
 
 
 # -----------------------------------------------------------------
-    def display_highscores(self):
-        print("Current Highscores:")
+    def display_highscore_menu(self):
+        highscores = SudokuHighscore.get_highscores()
+        print("\n+++++Highscores +++++")
+        for user, score in highscores:
+            print(f"{user}: {score}")
+        print(self.border)
         # Example: Fetch and display highscores
 
 # -----------------------------------------------------------------
@@ -90,13 +97,14 @@ class SudokuUI_Terminal(SudokuUI):
 
 # -----------------------------------------------------------------
     def get_next_move(self):
-        row, col, num = None, None, None
+        #### ISSUE HERE when pause is returned
+        row, col, num = None, 1, 1
 
-        row_input = input("Enter row (1-9) or 'pause': ").strip().lower()
-        if row_input == 'pause':
-            return row_input
+        row = input("Enter row (1-9) or 'pause': ").strip().lower()
+        if row == 'pause':
+            return row
 
-        row = int(row_input)
+        row = int(row)
         col = int(input("Enter column (1-9): ").strip())
         num = int(input("Enter number (1-9): ").strip())
         return row, col, num

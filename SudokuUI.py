@@ -33,7 +33,7 @@ class SudokuUI(ABC):
         pass
 
     @abstractmethod
-    def display_highscores(self):
+    def display_highscore_menu(self):
         """Display highscores."""
         pass
 

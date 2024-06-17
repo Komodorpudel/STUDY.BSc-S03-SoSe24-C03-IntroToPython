@@ -1,5 +1,3 @@
-from SudokuPauseMenu import SudokuPauseMenu
-
 from SudokuStopwatch import SudokuStopwatch
 from SudokuHighscore import *
 
@@ -15,7 +13,6 @@ class SudokuGame:
         self.mistakes = mistakes
         self.previous_elapsed_time = total_elapsed_time
 
-        self.my_pause_menu = SudokuPauseMenu(self)  # Create the pause menu here
         self.my_stopwatch = SudokuStopwatch()
         self.is_paused = False
         self.my_stopwatch.start() # We start counting
@@ -51,10 +48,6 @@ class SudokuGame:
 
     def get_user(self):
         return self.user
-
-    def get_main_menu(self):
-        return self.my_main_menu
-
 
 # -----------------------------------------------------------------
 # DONE
@@ -121,31 +114,6 @@ class SudokuGame:
 # -----------------------------------------------------------------
 # SAH: Complete
 
-    """
-    def print_board(self):
-        print("+ — — — + — — — + — — — +")
-        for i, row in enumerate(self.board):
-            if i % 3 == 0 and i != 0:
-                print("+ — — — + — — — + — — — +")
-            print("| ", end="")
-            for j, cell in enumerate(row):
-                print(f"DEBUG: cell = {cell}")  # Debug print to check cell type
-                if j % 3 == 0 and j != 0:
-                    print("| ", end="")
-                if isinstance(cell, dict) and cell['num'] == 0:
-                    print(". ", end="")
-                elif isinstance(cell, dict):
-                    print(f"{cell['num']} ", end="")
-                else:
-                    print("Error: cell is not a dictionary")
-            print("|")
-        print("+ — — — + — — — + — — — +")
-        elapsed_time = int(self.previous_elapsed_time + self.my_stopwatch.get_elapsed_time())
-        formatted_time = str(datetime.timedelta(seconds=elapsed_time))
-        print(f"Mistakes: {self.mistakes} | Time elapsed: {formatted_time}")
-        print("- — — — - — — — - — — — -")
-    """
-
 # -----------------------------------------------------------------
     def play(self):
         self.is_paused = False
@@ -156,7 +124,7 @@ class SudokuGame:
                 row, col, num = self.ui.get_next_move()
                 if row == 'pause':
                     self.is_paused = True
-                    self.controller.run_
+                    self.controller.run_pause_menu()
                     break
 
                 row, col = row - 1, col - 1
@@ -176,7 +144,7 @@ class SudokuGame:
                         self.ui.display_message("Move accepted.")
                         self.ui.display_board(self)
                         if self.check_win():
-                            print("!!!YOU WIN!!!")
+                            self.ui.display_message("!!!YOU WIN!!!")
                             self.my_stopwatch.pause()
                             self.ui.display_message(f"Score added: {self.difficulty}")
                             SudokuHighscore.set_highscore(self.user, self.difficulty)
@@ -191,14 +159,14 @@ class SudokuGame:
             if self.ui.get_general_input("Type 'pause' to go back to pause menu or hit enter to continue: ").lower() == 'pause':
                 self.is_paused = True
                 self.my_stopwatch.pause()
-                self.my_pause_menu.display()
+                self.controller.run_pause_menu()
 
 
 # -----------------------------------------------------------------
 # DONE
     def play_with_ai(self, ai_player):
         """Run the game with AI making moves."""
-        self.ui.display_board(self)
+        self.ui.display_board()
         while not self.check_win():
             move = ai_player.decide_move()
             if move:
@@ -206,7 +174,7 @@ class SudokuGame:
                 if self.is_valid_move(row, col, num):
                     self.place_number(row, col, num)
                     self.ui.display_message(f"AI placed {num} at ({row+1}, {col+1})")
-                    self.print_board()
+                    self.ui.display_board()
                 if self.check_win():
                     self.ui.display_message("AI wins!")
                     break

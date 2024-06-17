@@ -70,30 +70,29 @@ class SudokuAppController:
         generated_board = SudokuBoardGenerator.generate_board(difficulty)
 
         #####
-            def __init__(self, controller, ui, difficulty, board = None, user = "", mistakes=0, total_elapsed_time=0):
         self.game = SudokuGame(self, self.ui, difficulty, generated_board, self.user)
         self.game.play()
 
 # -----------------------------------------------------------------
-def run_pause_menu(self):
-
-    while True:
+    def run_pause_menu(self):
         choice = self.ui.display_pause_menu()
-        if choice == '1':
-            print("\nResuming game...")
-            self.game.play()
-            break
-        elif choice == '2':
-            SudokuSaveLoadManager.save_game(self.game)
-            print("Game saved.")
-        elif choice == '3':
-            print("\nReturning to main menu...")
-            self.game.get_main_menu().run_menu()
-            break
-        else:
-            print("Invalid choice. Please enter 1, 2, or 3.")
 
+        while True:
+            if choice == '1':
+                self.ui.display_message("Resuming game...")
+                self.ui.run_main_menu()
+                break
+            elif choice == '2':
+                ####################
+                SudokuSaveLoadManager.save_game(self.game)
+                self.ui.display_message("Game saved.")
+            elif choice == '3':
 
+                self.ui.display_message("Returning to main menu...")
+                self.run_main_menu()
+                break
+            else:
+                self.ui.display_message("Invalid choice. Please enter 1, 2, or 3.")
 
 
 # -----------------------------------------------------------------
@@ -156,14 +155,13 @@ def run_pause_menu(self):
 
 
 # -----------------------------------------------------------------
+###### DONE
     def run_highscore_menu(self):
         # Highscore viewing logic
-        print("+++++ Highscores +++++")
-        SudokuHighscore.display_highscores()
-        print("+++ Highscores End +++")
+        self.ui.display_highscore_menu()
         
         while True:
-            choice = input("Enter 5 to return to main menu: ")
+            choice = self.ui.get_general_input("Enter 5 to return to main menu: ")
             if choice == '5':
                 break
 

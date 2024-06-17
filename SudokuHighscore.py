@@ -31,16 +31,7 @@ class SudokuHighscore:
             if user == username:
                 return score
         return 0
-
-
-# -----------------------------------------------------------------
-    @classmethod
-    def display_highscores(cls):
-        highscores = cls.get_highscores()
-        print("\n+++++ Highscores +++++")
-        for user, score in highscores:
-            print(f"{user}: {score}")
-
+    
 
 # -----------------------------------------------------------------
     @classmethod

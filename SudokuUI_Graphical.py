@@ -49,7 +49,7 @@ class SudokuGUI(SudokuUI):
         self.clear_screen()
         # Implementation for load menu
 
-    def display_highscores(self):
+    def display_highscore_menu(self):
         self.clear_screen()
         # Implementation for displaying highscores
 
