@@ -9,25 +9,28 @@ from SudokuAI import *
 class SudokuAppController:
 
 # -----------------------------------------------------------------
-def __init__(self, ui):
-    self.ui = ui
-    self.game = None  # This will be a GameLogic instance, given when we start game
-    self.user = None
+    def __init__(self, ui):
+        # Needs ui, game, and user
+        self.ui = ui
+        self.game = None  # This will be a GameLogic instance, given when we start game
+        self.user = None
 
 
 # -----------------------------------------------------------------
-def run_welcome_menu(self):
-        self.user = self.ui.display_welcome_menu()
+    def run_welcome_menu(self):
+            self.user = self.ui.display_welcome_menu()
 
-        self.user_path = f"saves/{self.username}"
-        self.exit_flag = False
+            self.user_path = f"saves/{self.user}"
+            self.exit_flag = False
 
-        # Create directly if not existing - DIRTY
-        if not os.path.exists(self.user_path):
-            os.makedirs(self.user_path)
-            self.ui.display_message(f'New user "{self.username}" generated.')
-        else:
-            self.ui.display_message(f'Welcome back "{self.username}"!')
+            # Create directly if not existing - DIRTY
+            if not os.path.exists(self.user_path):
+                os.makedirs(self.user_path)
+                self.ui.display_message(f'New user "{self.user}" generated.')
+                self.run_main_menu()
+            else:
+                self.ui.display_message(f'Welcome back "{self.user}"!')
+                self.run_main_menu()
 
 
 # -----------------------------------------------------------------
@@ -65,8 +68,37 @@ def run_welcome_menu(self):
             except ValueError:
                 self.ui.display_message("Invalid input. Please enter an integer between 0 and 9.")
         generated_board = SudokuBoardGenerator.generate_board(difficulty)
-        my_game = SudokuGame(self, difficulty, generated_board, self.username)
-        my_game.play()
+
+        #####
+            def __init__(self, controller, ui, difficulty, board = None, user = "", mistakes=0, total_elapsed_time=0):
+        self.game = SudokuGame(self, self.ui, difficulty, generated_board, self.user)
+        self.game.play()
+
+# -----------------------------------------------------------------
+def run_pause_menu(self):
+    while True:
+        print("\n++++++ Pause Menu ++++++")
+        print("1. Resume game")
+        print("2. Save game")
+        print("3. Return to main menu")
+        print("+++++++++++++++++++++++")
+        choice = input("Enter your choice (1-3): ")
+
+        if choice == '1':
+            print("\nResuming game...")
+            self.game.play()
+            break
+        elif choice == '2':
+            SudokuSaveLoadManager.save_game(self.game)
+            print("Game saved.")
+        elif choice == '3':
+            print("\nReturning to main menu...")
+            self.game.get_main_menu().run_menu()
+            break
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
+
+
 
 
 # -----------------------------------------------------------------
@@ -81,7 +113,7 @@ def run_welcome_menu(self):
             except ValueError:
                 print("Invalid input. Please enter an integer between 0 and 9.")
         generated_board = SudokuBoardGenerator.generate_board(difficulty)
-        my_game = SudokuGame(self, difficulty, generated_board, self.username)
+        my_game = SudokuGame(self, difficulty, generated_board, self.user)
         my_ai = SudokuAI(my_game)
         my_game.play_with_ai(my_ai)
 
@@ -123,13 +155,13 @@ def run_welcome_menu(self):
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
         """
 
-        my_game = SudokuGame(self, difficulty, board, self.username, mistakes, elapsed_time)
+        my_game = SudokuGame(self, difficulty, board, self.user, mistakes, elapsed_time)
         my_game.mistakes = mistakes
         my_game.play()
 
 
 # -----------------------------------------------------------------
-    def view_highscore(self):
+    def run_highscore_menu(self):
         # Highscore viewing logic
         print("+++++ Highscores +++++")
         SudokuHighscore.display_highscores()

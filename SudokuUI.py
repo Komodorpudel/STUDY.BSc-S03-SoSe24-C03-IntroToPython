@@ -8,7 +8,7 @@ class SudokuUI(ABC):
 
 
     @abstractmethod
-    def display_welcome_screen(self):
+    def display_welcome_menu(self):
         """Display a welcome screen for user authentication."""
         pass
 

@@ -15,7 +15,7 @@ class SudokuGUI(SudokuUI):
         self.root.title("Sudoku Game")
         self.setup_welcome_screen()
 
-    def setup_welcome_screen(self):
+    def setup_welcome_menu(self):
         self.clear_screen()
         tk.Label(self.root, text="Welcome to Sudoku!").pack()
         username = simpledialog.askstring("Username", "Enter your username:")

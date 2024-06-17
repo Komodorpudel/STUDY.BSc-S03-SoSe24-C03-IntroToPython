@@ -6,15 +6,16 @@ from SudokuHighscore import *
 class SudokuGame:
 
 # -----------------------------------------------------------------
-    def __init__(self, ui, my_main_menu, difficulty, board = None, username = "", mistakes=0, total_elapsed_time=0):
-        self.board = board
-        self.username = username
+    def __init__(self, controller, ui, difficulty, board = None, user = "", mistakes=0, total_elapsed_time=0):
+        self.controller = controller
         self.ui = ui
-        self.my_main_menu = my_main_menu
         self.difficulty = difficulty
-        self.my_pause_menu = SudokuPauseMenu(self)  # Create the pause menu here
+        self.board = board
+        self.user = user
         self.mistakes = mistakes
         self.previous_elapsed_time = total_elapsed_time
+
+        self.my_pause_menu = SudokuPauseMenu(self)  # Create the pause menu here
         self.my_stopwatch = SudokuStopwatch()
         self.is_paused = False
         self.my_stopwatch.start() # We start counting
@@ -48,8 +49,8 @@ class SudokuGame:
     def get_total_elapsed_time(self):
         return self.previous_elapsed_time + self.my_stopwatch.get_elapsed_time()
 
-    def get_username(self):
-        return self.username
+    def get_user(self):
+        return self.user
 
     def get_main_menu(self):
         return self.my_main_menu
@@ -155,7 +156,7 @@ class SudokuGame:
                 row, col, num = self.ui.get_next_move()
                 if row == 'pause':
                     self.is_paused = True
-                    self.my_pause_menu.display()
+                    self.controller.run_
                     break
 
                 row, col = row - 1, col - 1
@@ -165,8 +166,8 @@ class SudokuGame:
                             self.ui.display_message("!!!YOU LOSE!!!")
                             self.my_stopwatch.pause()
                             self.ui.display_message(f"Score substracted: {self.difficulty * -1}")
-                            SudokuHighscore.set_highscore(self.username, self.difficulty * -1)
-                            highscore = SudokuHighscore.get_user_highscore(self.username)
+                            SudokuHighscore.set_highscore(self.user, self.difficulty * -1)
+                            highscore = SudokuHighscore.get_user_highscore(self.user)
                             self.ui.display_message(f"New total score: {highscore}")
                             break
 
@@ -178,8 +179,8 @@ class SudokuGame:
                             print("!!!YOU WIN!!!")
                             self.my_stopwatch.pause()
                             self.ui.display_message(f"Score added: {self.difficulty}")
-                            SudokuHighscore.set_highscore(self.username, self.difficulty)
-                            highscore = SudokuHighscore.get_user_highscore(self.username)
+                            SudokuHighscore.set_highscore(self.user, self.difficulty)
+                            highscore = SudokuHighscore.get_user_highscore(self.user)
                             self.ui.display_message(f"New total score: {highscore}")
                             break
 

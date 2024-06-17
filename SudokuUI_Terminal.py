@@ -1,4 +1,4 @@
-import SudokuUI
+from SudokuUI import SudokuUI
 import datetime
 from SudokuGame import *
 
@@ -16,16 +16,16 @@ class SudokuUI_Terminal(SudokuUI):
 
 
 # -----------------------------------------------------------------
-    def display_welcome_screen(self):
+    def display_welcome_menu(self):
         print( "\n+++++++++++++ WELCOME! +++++++++++++""")
-        username = input("Enter your Sudoku name: ")
+        self.user = input("Enter your Sudoku name: ")
         # password = input("Enter your password: ")  # For simplicity; in practice, handle passwords securely
-        return username #, password # password
+        return self.user #, password # password
 
 
 # -----------------------------------------------------------------
     def display_main_menu(self):
-        menu_title = f"\n++++++ Main Menu (User: {self.username}) ++++++"
+        menu_title = f"\n++++++ Main Menu (User: {self.user}) ++++++"
         print(menu_title)
         print("1. Start new game")
         print("2. Start game with AI player")
