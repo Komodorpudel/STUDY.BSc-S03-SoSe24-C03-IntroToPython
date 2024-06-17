@@ -2,10 +2,13 @@ from abc import ABC, abstractmethod
 
 class SudokuUI(ABC):
 
+    @abstractmethod
     def __init__(self, game=None, user=None):
-        self.game = game
-        self.user = user
+        pass
 
+    @abstractmethod
+    def set_game(self, game):
+        pass
 
     @abstractmethod
     def display_welcome_menu(self):

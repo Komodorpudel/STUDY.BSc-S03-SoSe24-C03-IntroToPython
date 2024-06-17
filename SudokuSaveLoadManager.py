@@ -1,19 +1,25 @@
 import os
 import datetime
+from SudokuAppController import *
+from SudokuGame import SudokuGame
 
 class SudokuSaveLoadManager:
 
+    def __init__(self, controller):
+        self.controller = controller
+        self.user = controller.get_user()
+
 # -----------------------------------------------------------------
-    @classmethod
-    def init_user_path(cls, username):
-        user_path = f"saves/{username}"
+
+    def init_user_path(self):
+        user_path = f"saves/{user}"
         os.makedirs(user_path, exist_ok=True)
         return user_path
 
 # -----------------------------------------------------------------
-    @classmethod
-    def save_game(cls, game):
-        user_path = cls.init_user_path(game.get_username())
+
+    def save_game(self, game):
+        user_path = self.init_user_path(game.get_username())
         now = datetime.datetime.now()
         timestamp = now.strftime("%Y%m%d_%H%M%S")
         game_name = f"{game.get_username()}_{timestamp}.txt"
@@ -29,8 +35,8 @@ class SudokuSaveLoadManager:
 
 
 # -----------------------------------------------------------------
-    @classmethod
-    def load_game(cls, game_path):
+
+    def load_game(self, game_path):
         print(f"Loading game from {game_path}")
         with open(game_path, 'r') as f:
             board = []
@@ -64,6 +70,9 @@ class SudokuSaveLoadManager:
         for row in board:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
         """
+    loaded_game = SudokuGame()
+
+    def __init__(self, controller, difficulty, board = None, user = "", mistakes=0, total_elapsed_time=0):
         return board, difficulty, mistakes, elapsed_time
 
 

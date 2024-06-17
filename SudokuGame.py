@@ -4,9 +4,10 @@ from SudokuHighscore import *
 class SudokuGame:
 
 # -----------------------------------------------------------------
-    def __init__(self, controller, ui, difficulty, board = None, user = "", mistakes=0, total_elapsed_time=0):
+    def __init__(self, controller, difficulty, board = None, user = "", mistakes=0, total_elapsed_time=0):
         self.controller = controller
-        self.ui = ui
+        self.ui = controller.get_ui()
+        self.ui.set_game(self)
         self.difficulty = difficulty
         self.board = board
         self.user = user
@@ -16,6 +17,8 @@ class SudokuGame:
         self.my_stopwatch = SudokuStopwatch()
         self.is_paused = False
         self.my_stopwatch.start() # We start counting
+
+
 
         if board is None:
             self.board = [
@@ -55,19 +58,19 @@ class SudokuGame:
 
         if not self.board[row][col]['mutable']:
             self.ui.display_message("This cell's value is given and cannot be changed.")
-            self.ui.display_board(self)
+            self.ui.display_board()
             return False
 
         for i in range(9):
             if self.board[row][i]['num'] == num:
                 self.ui.display_message(f"The number {num} is already in this row.")
                 self.mistakes += 1
-                self.ui.display_board(self)
+                self.ui.display_board()
                 return False
             if self.board[i][col]['num'] == num:
                 self.ui.display_message(f"The number {num} is already in this column.")
                 self.mistakes += 1
-                self.ui.display_board(self)
+                self.ui.display_board()
                 return False
 
         start_row, start_col = 3 * (row // 3), 3 * (col // 3)
@@ -76,7 +79,7 @@ class SudokuGame:
                 if self.board[start_row + i][start_col + j]['num'] == num:
                     self.ui.display_message(f"The number {num} is already in this block.")
                     self.mistakes += 1
-                    self.ui.display_board(self)
+                    self.ui.display_board()
                     return False
         self.ui.display_message("Move accepted.")
         return True
@@ -139,8 +142,7 @@ class SudokuGame:
 
                         self.ui.display_message("Try again.")
                     else:
-                        self.ui.display_message("Move accepted.")
-                        self.ui.display_board(self)
+                        self.ui.display_board()
                         if self.check_win():
                             self.ui.display_message("!!!YOU WIN!!!")
                             self.my_stopwatch.pause()

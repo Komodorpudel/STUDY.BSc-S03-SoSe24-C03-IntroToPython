@@ -16,6 +16,9 @@ class SudokuUI_Terminal(SudokuUI):
         self.menu_width = 0
         self.border = None
 
+    def set_game(self, game):
+        self.game = game
+
 
 # -----------------------------------------------------------------
     def display_welcome_menu(self):
@@ -85,12 +88,13 @@ class SudokuUI_Terminal(SudokuUI):
 # -----------------------------------------------------------------
     def display_highscore_menu(self):
         highscores = SudokuHighscore.get_highscores()
-        title = " Highscores "
+        title = " Highscores: "
         print("\n" + title.center(self.menu_width, '+'))
         for user, score in highscores:
             print(f"{user}: {score}")
         print(self.border)
         # Example: Fetch and display highscores
+
 
 # -----------------------------------------------------------------
     def get_general_input(self, prompt: str) -> str:
@@ -115,9 +119,6 @@ class SudokuUI_Terminal(SudokuUI):
 # -----------------------------------------------------------------
     def display_message(self, message):
         print(message)
-
-
-
 
 
 # -----------------------------------------------------------------

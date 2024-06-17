@@ -14,30 +14,40 @@ class SudokuAppController:
         self.ui = ui
         self.game = None  # This will be a GameLogic instance, given when we start game
         self.user = None
+        self.SaveLoadManager = None
 
+
+# -----------------------------------------------------------------
+    def get_ui(self):
+        return self.ui
+
+# -----------------------------------------------------------------
+    def get_user(self):
+        return self.user
 
 # -----------------------------------------------------------------
     def run_welcome_menu(self):
             self.user = self.ui.display_welcome_menu()
 
             self.user_path = f"saves/{self.user}"
-            self.exit_flag = False
+            # self.exit_flag = False
 
             # Create directly if not existing - DIRTY
             if not os.path.exists(self.user_path):
                 os.makedirs(self.user_path)
                 self.ui.display_message(f'New user "{self.user}" generated.')
-                self.run_main_menu()
             else:
                 self.ui.display_message(f'Welcome back "{self.user}"!')
-                self.run_main_menu()
+            
+            self.SaveLoadManager = SudokuSaveLoadManager(self)
+            self.run_main_menu()
 
 
 # -----------------------------------------------------------------
 # DONE
     def run_main_menu(self):
         choice = self.ui.display_main_menu()
-        
+
         while True:
             if choice == '1':
                 self.run_new_game_menu()
@@ -68,7 +78,7 @@ class SudokuAppController:
         generated_board = SudokuBoardGenerator.generate_board(difficulty)
 
         #####
-        self.game = SudokuGame(self, self.ui, difficulty, generated_board, self.user)
+        self.game = SudokuGame(self, difficulty, generated_board, self.user)
         self.game.play()
 
 # -----------------------------------------------------------------
@@ -97,13 +107,13 @@ class SudokuAppController:
     def run_new_game_with_ai_menu(self):
         while True:
             try:
-                difficulty = int(input("Enter difficulty wih ai should solve (0-9): "))
+                difficulty = int(self.ui.get_general_input("Enter difficulty wih ai should solve (0-9): "))
                 if 0 <= difficulty <= 9:
                     break
                 else:
-                    print("Please enter a valid difficulty between 0 and 9.")
+                    self.ui.display_message("Please enter a valid difficulty between 0 and 9.")
             except ValueError:
-                print("Invalid input. Please enter an integer between 0 and 9.")
+                self.ui.display_message("Invalid input. Please enter an integer between 0 and 9.")
         generated_board = SudokuBoardGenerator.generate_board(difficulty)
         my_game = SudokuGame(self, difficulty, generated_board, self.user)
         my_ai = SudokuAI(my_game)
@@ -147,7 +157,7 @@ class SudokuAppController:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
         """
 
-        my_game = SudokuGame(self, difficulty, board, self.user, mistakes, elapsed_time)
+        my_game = SudokuGame(self, self, self.ui, difficulty, board, self.user, mistakes, elapsed_time)
         my_game.mistakes = mistakes
         my_game.play()
 
@@ -161,5 +171,5 @@ class SudokuAppController:
         while True:
             choice = self.ui.get_general_input("Enter 5 to return to main menu: ")
             if choice == '5':
-                break
+                self.run_main_menu()
 
