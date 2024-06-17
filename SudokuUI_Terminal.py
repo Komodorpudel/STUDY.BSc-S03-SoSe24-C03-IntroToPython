@@ -10,20 +10,27 @@ No game logic checks are done here.
 class SudokuUI_Terminal(SudokuUI):
 
 # -----------------------------------------------------------------
-    def welcome_screen(self):
-        print("Welcome to Sudoku!")
-        username = input("Enter your username: ")
+    def display_welcome_screen(self):
+        print( "\n+++++++++++++ WELCOME! +++++++++++++""")
+        username = input("Enter your Sudoku name: ")
         # password = input("Enter your password: ")  # For simplicity; in practice, handle passwords securely
-        return username, # password
+        return username #, password # password
 
 
 # -----------------------------------------------------------------
     def display_main_menu(self):
-        print("1. Start New Game")
-        print("2. Load unfinished Game")
-        print("3. View Highscores")
-        print("4. Exit")
-        return input("Enter your choice: ")
+        menu_title = f"\n++++++ Main Menu (User: {self.username}) ++++++"
+        print(menu_title)
+        print("1. Start new game")
+        print("2. Start game with AI player")
+        print("3. Load unfinished game")
+        print("4. Highscore")
+        print("5. Exit")
+
+        # Generate a border that matches the length of the menu_title and print it
+        border = '+' * len(menu_title.strip())  # Remove the newline for accurate length calculation
+        print(border)
+        return input("Enter your choice (1-5): ")
     
 
 # -----------------------------------------------------------------
@@ -46,6 +53,27 @@ class SudokuUI_Terminal(SudokuUI):
         formatted_time = str(datetime.timedelta(seconds=elapsed_time))
         print(f"Mistakes: {current_game.get_mistakes()} / 3 | Time elapsed: {formatted_time}")
         print("- — — — - — — — - — — — -")
+
+
+# -----------------------------------------------------------------
+    def display_pause_menu(self):
+        print("1. Resume Game")
+        print("2. Save Game")
+        print("3. Quit to Main Menu")
+        return input("Choose an option: ")
+
+
+# -----------------------------------------------------------------
+    def display_load_menu(self):
+        print("Select a saved game to load:")
+        # Example: List saved games
+        return input("Enter the file name to load: ")
+
+
+# -----------------------------------------------------------------
+    def display_highscores(self):
+        print("Current Highscores:")
+        # Example: Fetch and display highscores
 
 # -----------------------------------------------------------------
     def get_general_input(self, prompt: str) -> str:
@@ -71,25 +99,7 @@ class SudokuUI_Terminal(SudokuUI):
         print(message)
 
 
-# -----------------------------------------------------------------
-    def display_pause_menu(self):
-        print("1. Resume Game")
-        print("2. Save Game")
-        print("3. Quit to Main Menu")
-        return input("Choose an option: ")
 
-
-# -----------------------------------------------------------------
-    def display_load_menu(self):
-        print("Select a saved game to load:")
-        # Example: List saved games
-        return input("Enter the file name to load: ")
-
-
-# -----------------------------------------------------------------
-    def display_highscores(self):
-        print("Current Highscores:")
-        # Example: Fetch and display highscores
 
 
 # -----------------------------------------------------------------

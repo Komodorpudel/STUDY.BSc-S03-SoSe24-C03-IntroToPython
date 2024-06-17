@@ -6,56 +6,54 @@ from SudokuGame import SudokuGame
 from SudokuHighscore import *
 from SudokuAI import *
 
-class SudokuMainMenu:
+class SudokuAppController:
 
 # -----------------------------------------------------------------
-    def __init__(self):
-        print( "\n+++++++++++++ WELCOME! +++++++++++++""")
-        self.username = input("Enter your Sudoku name: ")
+def __init__(self, ui):
+        self.ui = ui
+        self.game = None  # This will be a GameLogic instance, given when we start game
+        self.user = None
+
+
+# -----------------------------------------------------------------
+def run_welcome_menu(self):
+        self.user = self.ui.display_welcome_menu()
+
         self.user_path = f"saves/{self.username}"
         self.exit_flag = False
+
+        # Create directly if not existing - DIRTY
         if not os.path.exists(self.user_path):
             os.makedirs(self.user_path)
-            print(f'New user "{self.username}" generated.')
+            self.ui.display_message(f'New user "{self.username}" generated.')
         else:
-            print(f'Welcome back "{self.username}"!')
+            self.ui.display_message(f'Welcome back "{self.username}"!')
 
 
 # -----------------------------------------------------------------
-    def run_menu(self):
+    def run_main_menu(self):
         self.exit_flag = False
-
         while not self.exit_flag:
-            menu_title = f"\n++++++ Main Menu (User: {self.username}) ++++++"
-            print(menu_title)
-            print("1. Start new game")
-            print("2. Start game with AI player")
-            print("3. Load unfinished game")
-            print("4. Highscore")
-            print("5. Exit")
-
-            # Generate a border that matches the length of the menu_title and print it
-            border = '+' * len(menu_title.strip())  # Remove the newline for accurate length calculation
-            print(border)
-            choice = input("Enter your choice (1-5): ")
+            choice = self.ui.display_main_menu()
 
             if choice == '1':
-                self.start_new_game()
+                self.run_new_game_menu()
             elif choice == '2':
-                self.start_new_game_with_ai()
+                self.run_new_game_with_ai_menu()
             elif choice == '3':
-                self.load_game()
+                self.run_load_game_menu()
             elif choice == '4':
-                self.view_highscore()
+                self.run_highscore_menu()
             elif choice == '5':
-                print("Exiting the game. Goodbye!")
+                self.ui.display_message("Exiting the game. Goodbye!")
                 self.exit_flag = True
             else:
-                print("Invalid choice. Please enter 1, 2, 3, or 4.")
+                # Not really relevant for GUI since we can limit input options
+                self.ui.display_message("Invalid choice. Please enter 1, 2, 3, 4, or 5.")
 
 
 # -----------------------------------------------------------------
-    def start_new_game(self):
+    def run_new_game_menu(self):
         while True:
             try:
                 difficulty = int(input("Enter difficulty (0-9): "))
@@ -71,7 +69,7 @@ class SudokuMainMenu:
 
 
 # -----------------------------------------------------------------
-    def start_new_game_with_ai(self):
+    def run_new_game_with_ai_menu(self):
         while True:
             try:
                 difficulty = int(input("Enter difficulty wih ai should solve (0-9): "))
@@ -88,7 +86,7 @@ class SudokuMainMenu:
 
 
 # -----------------------------------------------------------------
-    def load_game(self):
+    def run_load_game_menu(self):
         games = [f for f in os.listdir(self.user_path) if f.endswith('.txt')]
         print(f"DEBUG: Available saved games: {games}")  # Debug print
         if games:

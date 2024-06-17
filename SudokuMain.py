@@ -1,5 +1,6 @@
 # -----------------------------------------------------------------
     def main():
+
         # Ask the user for their preferred UI type
         ui_type = input("Which UI would you like to use? (Enter 'gui' or 'terminal'): ").strip().lower()
         
@@ -13,10 +14,10 @@
             print("Invalid input. Exiting...")
             sys.exit(1)
 
-    # Assuming you have a UIController class that handles the interaction
-    from SudokuUI_Controller import SudokuUI_Controller 
-    controller = SudokuUI_Controller(ui)
-    controller.run()
+        # Assuming you have a UIController class that handles the interaction
+        from SudokuUI_Controller import SudokuUI_Controller 
+        controller = SudokuAppController(ui)
+        controller.run()
 
 # -----------------------------------------------------------------
 
