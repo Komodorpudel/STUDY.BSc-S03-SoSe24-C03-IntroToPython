@@ -47,19 +47,24 @@ class SudokuAppController:
 # -----------------------------------------------------------------
 # DONE
     def run_main_menu(self):
-        choice = self.ui.display_main_menu()
-
         while True:
+            choice = self.ui.display_main_menu()
+
             if choice == '1':
                 self.run_new_game_menu()
+                break
             elif choice == '2':
                 self.run_new_game_with_ai_menu()
+                break
             elif choice == '3':
                 self.run_load_game_menu()
+                break
             elif choice == '4':
                 self.run_highscore_menu()
+                break
             elif choice == '5':
                 self.ui.display_message("Exiting the game. Goodbye!")
+                break
             else:
                 # Not really relevant for GUI since we can limit input options
                 self.ui.display_message("Invalid choice. Please enter 1, 2, 3, 4, or 5.")
@@ -76,7 +81,8 @@ class SudokuAppController:
                     self.ui.display_message("Please enter a valid difficulty between 0 and 9.")
             except ValueError:
                 self.ui.display_message("Invalid input. Please enter an integer between 0 and 9.")
-        generated_board = SudokuBoardGenerator.generate_board(difficulty)
+        # generated_board = SudokuBoardGenerator.generate_board(difficulty)
+        generated_board = None
 
         #####
         self.game = SudokuGame(self, difficulty, generated_board, self.user)

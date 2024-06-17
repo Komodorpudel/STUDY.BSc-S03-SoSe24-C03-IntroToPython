@@ -8,7 +8,7 @@ class SudokuGame:
         self.controller = controller
         self.ui = controller.get_ui()
         self.ui.set_game(self)
-        
+
         self.difficulty = difficulty
         self.board = board
         self.user = user
@@ -18,8 +18,6 @@ class SudokuGame:
         self.my_stopwatch = SudokuStopwatch()
         self.is_paused = False
         self.my_stopwatch.start() # We start counting
-
-
 
         if board is None:
             self.board = [
@@ -52,6 +50,7 @@ class SudokuGame:
 
     def get_user(self):
         return self.user
+
 
 # -----------------------------------------------------------------
 # DONE
@@ -137,6 +136,7 @@ class SudokuGame:
                             SudokuHighscore.set_highscore(self.user, self.difficulty * -1)
                             highscore = SudokuHighscore.get_user_highscore(self.user)
                             self.ui.display_message(f"New total score: {highscore}")
+                            self.controller.run_main_menu()
                             break
 
                         self.ui.display_message("Try again.")
@@ -149,6 +149,7 @@ class SudokuGame:
                             SudokuHighscore.set_highscore(self.user, self.difficulty)
                             highscore = SudokuHighscore.get_user_highscore(self.user)
                             self.ui.display_message(f"New total score: {highscore}")
+                            self.controller.run_main_menu()
                             break
 
                 else:
@@ -163,7 +164,6 @@ class SudokuGame:
 
 
 # -----------------------------------------------------------------
-# DONE
     def play_with_ai(self, ai_player):
         """Run the game with AI making moves."""
         self.ui.display_board()
@@ -184,4 +184,4 @@ class SudokuGame:
 
 
 # -----------------------------------------------------------------
-         
+  
