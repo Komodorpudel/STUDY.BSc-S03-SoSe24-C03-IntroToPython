@@ -2,6 +2,14 @@ import tkinter as tk
 from tkinter import simpledialog, messagebox
 
 class SudokuGUI(SudokuUI):
+
+# -----------------------------------------------------------------
+    def __init__(self, game=None, user=None):
+        self.game = game
+        self.user = user
+
+
+# -----------------------------------------------------------------
     def __init__(self, root):
         self.root = root
         self.root.title("Sudoku Game")

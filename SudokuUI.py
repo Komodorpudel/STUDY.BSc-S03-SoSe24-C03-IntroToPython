@@ -1,6 +1,12 @@
 from abc import ABC, abstractmethod
 
 class SudokuUI(ABC):
+
+    def __init__(self, game=None, user=None):
+        self.game = game
+        self.user = user
+
+
     @abstractmethod
     def display_welcome_screen(self):
         """Display a welcome screen for user authentication."""

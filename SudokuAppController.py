@@ -10,9 +10,9 @@ class SudokuAppController:
 
 # -----------------------------------------------------------------
 def __init__(self, ui):
-        self.ui = ui
-        self.game = None  # This will be a GameLogic instance, given when we start game
-        self.user = None
+    self.ui = ui
+    self.game = None  # This will be a GameLogic instance, given when we start game
+    self.user = None
 
 
 # -----------------------------------------------------------------
@@ -31,6 +31,7 @@ def run_welcome_menu(self):
 
 
 # -----------------------------------------------------------------
+# DONE
     def run_main_menu(self):
         self.exit_flag = False
         while not self.exit_flag:
@@ -56,13 +57,13 @@ def run_welcome_menu(self):
     def run_new_game_menu(self):
         while True:
             try:
-                difficulty = int(input("Enter difficulty (0-9): "))
+                difficulty = int(self.ui.get_general_input("Enter difficulty (0-9): "))
                 if 0 <= difficulty <= 9:
                     break
                 else:
-                    print("Please enter a valid difficulty between 0 and 9.")
+                    self.ui.display_message("Please enter a valid difficulty between 0 and 9.")
             except ValueError:
-                print("Invalid input. Please enter an integer between 0 and 9.")
+                self.ui.display_message("Invalid input. Please enter an integer between 0 and 9.")
         generated_board = SudokuBoardGenerator.generate_board(difficulty)
         my_game = SudokuGame(self, difficulty, generated_board, self.username)
         my_game.play()

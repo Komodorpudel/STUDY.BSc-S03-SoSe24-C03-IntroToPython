@@ -153,7 +153,7 @@ class SudokuGame:
         while not self.is_paused:
             try:
                 row, col, num = self.ui.get_next_move()
-                if row_input == 'pause':
+                if row == 'pause':
                     self.is_paused = True
                     self.my_pause_menu.display()
                     break
@@ -173,7 +173,7 @@ class SudokuGame:
                         self.ui.display_message("Try again.")
                     else:
                         self.ui.display_message("Move accepted.")
-                        self.print_board()
+                        self.ui.display_board(self)
                         if self.check_win():
                             print("!!!YOU WIN!!!")
                             self.my_stopwatch.pause()

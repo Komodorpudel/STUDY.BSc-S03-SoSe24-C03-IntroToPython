@@ -10,6 +10,12 @@ No game logic checks are done here.
 class SudokuUI_Terminal(SudokuUI):
 
 # -----------------------------------------------------------------
+    def __init__(self, game=None, user=None):
+        self.game = game
+        self.user = user
+
+
+# -----------------------------------------------------------------
     def display_welcome_screen(self):
         print( "\n+++++++++++++ WELCOME! +++++++++++++""")
         username = input("Enter your Sudoku name: ")
@@ -57,10 +63,12 @@ class SudokuUI_Terminal(SudokuUI):
 
 # -----------------------------------------------------------------
     def display_pause_menu(self):
-        print("1. Resume Game")
-        print("2. Save Game")
-        print("3. Quit to Main Menu")
-        return input("Choose an option: ")
+        print("\n++++++ Pause Menu ++++++")
+        print("1. Resume game")
+        print("2. Save game")
+        print("3. Return to main menu")
+        print("+++++++++++++++++++++++")
+        return input("Enter your choice (1-3): ")
 
 
 # -----------------------------------------------------------------

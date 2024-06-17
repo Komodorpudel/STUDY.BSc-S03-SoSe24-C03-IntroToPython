@@ -1,3 +1,5 @@
+import sys
+
 # -----------------------------------------------------------------
     def main():
 
@@ -15,7 +17,7 @@
             sys.exit(1)
 
         # Assuming you have a UIController class that handles the interaction
-        from SudokuUI_Controller import SudokuUI_Controller 
+        from SudokuAppController import SudokuAppController
         controller = SudokuAppController(ui)
         controller.run()
 
