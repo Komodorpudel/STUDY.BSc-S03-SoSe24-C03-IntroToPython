@@ -114,13 +114,11 @@ class SudokuGame:
         return False
 
 
-
 # -----------------------------------------------------------------
     def play(self):
-        self.is_paused = False
         self.ui.display_board()
 
-        while not self.is_paused:
+        while True:
             try:
                 row, col, num = self.ui.get_next_move()
                 if row == 'pause':
@@ -156,10 +154,11 @@ class SudokuGame:
                     self.ui.display_message("Please enter a valid row and column between 1 and 9.")
             except ValueError:
                 self.ui.display_message("Invalid input. Please enter integers only.")
-            if self.ui.get_general_input("Type 'pause' to go back to pause menu or hit enter to continue: ").lower() == 'pause':
-                self.is_paused = True
+
+            if self.ui.get_general_input("Type 'pause' to open pause menu or hit enter to continue: ").lower() == 'pause':
                 self.my_stopwatch.pause()
                 self.controller.run_pause_menu()
+                break
 
 
 # -----------------------------------------------------------------

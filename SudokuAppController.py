@@ -148,7 +148,7 @@ class SudokuAppController:
 
 # -----------------------------------------------------------------
     def load_game_from_file(self, game_path):
-        board, difficulty, mistakes, elapsed_time = SudokuSaveLoadManager.load_game(game_path)
+        self.game = SudokuSaveLoadManager.load_game(game_path)
 
         # Print out the loaded board for debugging
         """         
@@ -156,10 +156,7 @@ class SudokuAppController:
         for row in board:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
         """
-
-        my_game = SudokuGame(self, self, self.ui, difficulty, board, self.user, mistakes, elapsed_time)
-        my_game.mistakes = mistakes
-        my_game.play()
+        self.game.play()
 
 
 # -----------------------------------------------------------------

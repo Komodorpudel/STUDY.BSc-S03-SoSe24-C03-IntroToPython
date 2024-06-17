@@ -19,7 +19,7 @@ class SudokuSaveLoadManager:
 # -----------------------------------------------------------------
 
     def save_game(self, game):
-        user_path = self.init_user_path(game.get_username())
+        user_path = self.init_user_path()
         now = datetime.datetime.now()
         timestamp = now.strftime("%Y%m%d_%H%M%S")
         game_name = f"{game.get_username()}_{timestamp}.txt"
@@ -70,10 +70,8 @@ class SudokuSaveLoadManager:
         for row in board:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
         """
-    loaded_game = SudokuGame()
-
-    def __init__(self, controller, difficulty, board = None, user = "", mistakes=0, total_elapsed_time=0):
-        return board, difficulty, mistakes, elapsed_time
+        loaded_game = SudokuGame(self.controller, difficulty, board, self.user, mistakes, elapsed_time)
+        return loaded_game
 
 
 # -----------------------------------------------------------------
