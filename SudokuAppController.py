@@ -76,14 +76,9 @@ class SudokuAppController:
 
 # -----------------------------------------------------------------
 def run_pause_menu(self):
-    while True:
-        print("\n++++++ Pause Menu ++++++")
-        print("1. Resume game")
-        print("2. Save game")
-        print("3. Return to main menu")
-        print("+++++++++++++++++++++++")
-        choice = input("Enter your choice (1-3): ")
 
+    while True:
+        choice = self.ui.display_pause_menu()
         if choice == '1':
             print("\nResuming game...")
             self.game.play()
