@@ -5,19 +5,20 @@ from SudokuGame import SudokuGame
 
 class SudokuSaveLoadManager:
 
+# -----------------------------------------------------------------
     def __init__(self, controller):
         self.controller = controller
         self.user = controller.get_user()
 
-# -----------------------------------------------------------------
 
+# -----------------------------------------------------------------
     def init_user_path(self):
         user_path = f"saves/{user}"
         os.makedirs(user_path, exist_ok=True)
         return user_path
 
-# -----------------------------------------------------------------
 
+# -----------------------------------------------------------------
     def save_game(self, game):
         user_path = self.init_user_path()
         now = datetime.datetime.now()
@@ -35,7 +36,6 @@ class SudokuSaveLoadManager:
 
 
 # -----------------------------------------------------------------
-
     def load_game(self, game_path):
         print(f"Loading game from {game_path}")
         with open(game_path, 'r') as f:
@@ -50,7 +50,7 @@ class SudokuSaveLoadManager:
                     mistakes = int(line.split(": ")[1])
                 elif line.startswith("Elapsed time:"):
                     try:
-                        elapsed_time = int(line.split(": ")[1])
+                        elapsed_time = float(line.split(": ")[1])
                     except ValueError as e:
                         print(f"Error parsing elapsed time: {e}")
                         continue

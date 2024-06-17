@@ -8,6 +8,7 @@ class SudokuGame:
         self.controller = controller
         self.ui = controller.get_ui()
         self.ui.set_game(self)
+        
         self.difficulty = difficulty
         self.board = board
         self.user = user
