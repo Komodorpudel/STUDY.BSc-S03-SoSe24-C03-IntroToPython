@@ -84,11 +84,12 @@ class SudokuGame:
                     self.mistakes += 1
                     self.ui.display_board()
                     return False
-        print("Move accepted.")
+        self.ui.display_message("Move accepted.")
         return True
 
 
 # -----------------------------------------------------------------
+# DONE
     def check_win(self):
         full_set = set(range(1, 10))
 
@@ -165,31 +166,31 @@ class SudokuGame:
                 if 0 <= row < 9 and 0 <= col < 9:
                     if not self.place_number(row, col, num):
                         if self.mistakes >= 3:
-                            print("!!!YOU LOSE!!!")
+                            self.ui.display_message("!!!YOU LOSE!!!")
                             self.my_stopwatch.pause()
-                            print(f"Score substracted: {self.difficulty * -1}")
+                            self.ui.display_message(f"Score substracted: {self.difficulty * -1}")
                             SudokuHighscore.set_highscore(self.username, self.difficulty * -1)
                             highscore = SudokuHighscore.get_user_highscore(self.username)
-                            print(f"New total score: {highscore}")
+                            self.ui.display_message(f"New total score: {highscore}")
                             break
 
-                        print("Try again.")
+                        self.ui.display_message("Try again.")
                     else:
-                        print("Move accepted.")
+                        self.ui.display_message("Move accepted.")
                         self.print_board()
                         if self.check_win():
                             print("!!!YOU WIN!!!")
                             self.my_stopwatch.pause()
-                            print(f"Score added: {self.difficulty}")
+                            self.ui.display_message(f"Score added: {self.difficulty}")
                             SudokuHighscore.set_highscore(self.username, self.difficulty)
                             highscore = SudokuHighscore.get_user_highscore(self.username)
-                            print(f"New total score: {highscore}")
+                            self.ui.display_message(f"New total score: {highscore}")
                             break
 
                 else:
-                    print("Please enter a valid row and column between 1 and 9.")
+                    self.ui.display_message("Please enter a valid row and column between 1 and 9.")
             except ValueError:
-                print("Invalid input. Please enter integers only.")
+                self.ui.display_message("Invalid input. Please enter integers only.")
             if input("Type 'pause' to go back to pause menu or hit enter to continue: ").lower() == 'pause':
                 self.is_paused = True
                 self.my_stopwatch.pause()
@@ -197,6 +198,7 @@ class SudokuGame:
 
 
 # -----------------------------------------------------------------
+# DONE
     def play_with_ai(self, ai_player):
         """Run the game with AI making moves."""
         self.print_board()
@@ -206,13 +208,13 @@ class SudokuGame:
                 row, col, num = move
                 if self.is_valid_move(row, col, num):
                     self.place_number(row, col, num)
-                    print(f"AI placed {num} at ({row+1}, {col+1})")
+                    self.ui.display_message(f"AI placed {num} at ({row+1}, {col+1})")
                     self.print_board()
                 if self.check_win():
-                    print("AI wins!")
+                    self.ui.display_message("AI wins!")
                     break
             else:
-                print("AI could not make a valid move.")
+                self.ui.display_message("AI could not make a valid move.")
                 break
 
 
