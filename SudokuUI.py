@@ -17,7 +17,12 @@ class SudokuUI(ABC):
         pass
 
     @abstractmethod
-    def get_user_input(self):
+    def get_general_input(self, prompt: str) -> str:
+        """Display a prompt and return the user's input as a string."""
+        pass
+
+    @abstractmethod
+    def get_next_move(self):
         """Prompt the user to enter their move."""
         pass
 

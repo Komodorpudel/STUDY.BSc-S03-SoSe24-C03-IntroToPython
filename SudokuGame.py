@@ -148,10 +148,11 @@ class SudokuGame:
 # -----------------------------------------------------------------
     def play(self):
         self.is_paused = False
-        self.print_board()
+        self.ui.display_board()
 
         while not self.is_paused:
             try:
+
                 row_input = input("Enter row (1-9) or 'pause': ").strip().lower()
                 if row_input == 'pause':
                     self.is_paused = True
@@ -191,7 +192,7 @@ class SudokuGame:
                     self.ui.display_message("Please enter a valid row and column between 1 and 9.")
             except ValueError:
                 self.ui.display_message("Invalid input. Please enter integers only.")
-            if input("Type 'pause' to go back to pause menu or hit enter to continue: ").lower() == 'pause':
+            if self.ui.get_general_input("Type 'pause' to go back to pause menu or hit enter to continue: ").lower() == 'pause':
                 self.is_paused = True
                 self.my_stopwatch.pause()
                 self.my_pause_menu.display()

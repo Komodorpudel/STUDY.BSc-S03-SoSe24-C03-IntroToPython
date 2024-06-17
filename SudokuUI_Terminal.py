@@ -47,9 +47,13 @@ class SudokuUI_Terminal(SudokuUI):
         print(f"Mistakes: {current_game.get_mistakes()} / 3 | Time elapsed: {formatted_time}")
         print("- — — — - — — — - — — — -")
 
+# -----------------------------------------------------------------
+    def get_general_input(self, prompt: str) -> str:
+        return input(prompt)
+
 
 # -----------------------------------------------------------------
-    def get_user_input(self):
+    def get_next_move(self):
         return input("Enter your move (row col num): ")
 
 
