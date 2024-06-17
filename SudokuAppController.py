@@ -12,7 +12,7 @@ class SudokuAppController:
     def __init__(self, ui):
         # Needs ui, game, and user
         self.ui = ui
-        self.game = None  # This will be a GameLogic instance, given when we start game
+        self.game = None  # This will be a GameLogic instance, given by game when we start game
         self.user = None
         self.user_save_path = None
         self.SaveLoadManager = None
@@ -45,7 +45,6 @@ class SudokuAppController:
 
 
 # -----------------------------------------------------------------
-# DONE
     def run_main_menu(self):
         while True:
             choice = self.ui.display_main_menu()

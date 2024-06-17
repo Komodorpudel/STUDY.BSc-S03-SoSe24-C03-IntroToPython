@@ -15,7 +15,6 @@ def main():
         print("Invalid input. Exiting...")
         sys.exit(1)
 
-    # Assuming you have a UIController class that handles the interaction
     from SudokuAppController import SudokuAppController
     controller = SudokuAppController(ui)
     controller.run_welcome_menu()
