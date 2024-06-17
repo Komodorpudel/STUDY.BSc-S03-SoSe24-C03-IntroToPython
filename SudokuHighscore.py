@@ -31,7 +31,7 @@ class SudokuHighscore:
             if user == username:
                 return score
         return 0
-    
+
 
 # -----------------------------------------------------------------
     @classmethod
