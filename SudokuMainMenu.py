@@ -141,10 +141,3 @@ class SudokuMainMenu:
             if choice == '5':
                 break
 
-# -----------------------------------------------------------------
-if __name__ == "__main__":
-    my_main_menu = SudokuMainMenu()
-    my_main_menu.run_menu()
-
-
-# -----------------------------------------------------------------
