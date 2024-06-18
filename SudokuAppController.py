@@ -42,7 +42,6 @@ class SudokuAppController:
         else:
             self.ui.display_message(f'Welcome back "{self.user}"!')
         
-        self.SaveLoadManager = SudokuSaveLoadManager(self)
         self.run_main_menu()
 
 
@@ -132,15 +131,11 @@ class SudokuAppController:
 # -----------------------------------------------------------------
 ##### TODOOOOOOO
     def run_load_game_menu(self):
-        games = 
         # print(f"DEBUG: Available saved games: {games}")  # Debug print
-        if games:
-            print("\nAvailable saved games:")
-            for i, game in enumerate(games, 1):
-                print(f"{i}. {game}")
-            game_choice = input("Select a game to load (or type 'back' to return to the main menu): ")
-            if game_choice.lower() == 'back':
-                return
+        
+        game_choice = self.ui.display_load_menu()
+        if game_choice.lower() == 'back':
+                self.run_main_menu()
             else:
                 try:
                     selected_game_index = int(game_choice) - 1
@@ -148,14 +143,16 @@ class SudokuAppController:
                         selected_game = games[selected_game_index]
                         print(f"DEBUG: Selected game: {selected_game}")  # Debug print
                         game_path = os.path.join(self.user_save_path, selected_game)
-                        self.game = self.SaveLoadManager.load_game(game_path)
-                        self.game.play()
+
                     else:
-                        print("Invalid selection: Index out of range.")
+                        self.ui.display_message("Invalid selection: Index out of range.")
                 except (IndexError, ValueError) as e:
-                    print(f"Invalid selection: {e}")
-        else:
-            print("No saved games available.")
+                    self.ui.display_message(f"Invalid selection: {e}")
+
+            self.game = SaveLoadManager.load_game(game_path, self)
+            self.game.play()
+
+
 
 
 # -----------------------------------------------------------------

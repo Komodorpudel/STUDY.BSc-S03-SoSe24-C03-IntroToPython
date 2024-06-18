@@ -51,6 +51,9 @@ class SudokuGame:
     def get_user(self):
         return self.user
 
+    def get_ui(self):
+        return self.ui
+
 
 # -----------------------------------------------------------------
 # DONE

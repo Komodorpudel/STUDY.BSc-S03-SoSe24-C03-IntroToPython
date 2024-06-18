@@ -28,6 +28,7 @@ class SudokuSaveLoadManager:
         timestamp = now.strftime("%Y%m%d_%H%M%S")
         game_name = f"{game.get_username()}_{timestamp}.txt"
         save_path = os.path.join(user_path, game_name)
+
         with open(save_path, 'w') as f:
             f.write(f"Difficulty: {game.get_difficulty()}\n")
             for row in game.get_board():
@@ -35,7 +36,9 @@ class SudokuSaveLoadManager:
             f.write(f"Mistakes: {game.mistakes}\n")
             elapsed_time = game.get_total_elapsed_time()
             f.write(f"Elapsed time: {elapsed_time}\n")
-        print(f"Game saved as {game_name}.")
+            
+        game.get_ui.display_message(f"Game saved as {game_name}.")
+
 
 # -----------------------------------------------------------------
     @classmethod
@@ -46,7 +49,7 @@ class SudokuSaveLoadManager:
 
 # -----------------------------------------------------------------
     @classmethod
-    def load_game(self, game_path):
+    def load_game(self, game_path, controller):
         print(f"Loading game from {game_path}")
         with open(game_path, 'r') as f:
             board = []
@@ -80,7 +83,7 @@ class SudokuSaveLoadManager:
         for row in board:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
         """
-        loaded_game = SudokuGame(self.controller, difficulty, board, self.user, mistakes, elapsed_time)
+        loaded_game = SudokuGame(controller, difficulty, board, self.user, mistakes, elapsed_time)
         return loaded_game
 
 

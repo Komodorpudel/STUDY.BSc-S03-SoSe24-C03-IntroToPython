@@ -1,6 +1,7 @@
 from SudokuUI import SudokuUI
 import datetime
 from SudokuGame import *
+from SudokuSaveLoadManager import *
 
 """
 Only handels print and/or returns something.
@@ -16,6 +17,8 @@ class SudokuUI_Terminal(SudokuUI):
         self.menu_width = 0
         self.border = None
 
+
+# -----------------------------------------------------------------
     def set_game(self, game):
         self.game = game
 
@@ -25,6 +28,7 @@ class SudokuUI_Terminal(SudokuUI):
         print( "\n+++++++++++++ WELCOME! +++++++++++++""")
         self.user = input("Enter your Sudoku name: ")
         # password = input("Enter your password: ")  # For simplicity; in practice, handle passwords securely
+        
         return self.user #, password # password
 
 
@@ -39,8 +43,8 @@ class SudokuUI_Terminal(SudokuUI):
         print("3. Load unfinished game")
         print("4. Highscore")
         print("5. Exit")
-
         print(self.border)
+
         return input("Enter your choice (1-5): ")
 
 
@@ -75,14 +79,27 @@ class SudokuUI_Terminal(SudokuUI):
         print("2. Save game")
         print("3. Return to main menu")
         print(self.border)
+
         return input("Enter your choice (1-3): ")
 
 
 # -----------------------------------------------------------------
     def display_load_menu(self):
-        print("Select a saved game to load:")
-        # Example: List saved games
-        return input("Enter the file name to load: ")
+        title = " Saved games: "
+        print("\n" + title.center(self.menu_width, '+'))
+
+        saved_games = SudokuSaveLoadManager.get_list_of_saved_games(self.user)
+
+        if saved_games:
+            for i, game in enumerate(saved_games, 1):
+                print(f"{i}. {game}")
+            game_choice = input("Select a game to load (or type 'return' to return to the main menu): ")
+        else:
+            print("No saved games available.")
+
+        print(self.border)
+
+        return game_choice
 
 
 # -----------------------------------------------------------------
@@ -93,11 +110,11 @@ class SudokuUI_Terminal(SudokuUI):
         for user, score in highscores:
             print(f"{user}: {score}")
         print(self.border)
-        # Example: Fetch and display highscores
 
 
 # -----------------------------------------------------------------
     def get_general_input(self, prompt: str) -> str:
+
         return input(prompt)
 
 
@@ -113,6 +130,7 @@ class SudokuUI_Terminal(SudokuUI):
         row = int(row)
         col = int(input("Enter column (1-9): ").strip())
         num = int(input("Enter number (1-9): ").strip())
+
         return row, col, num
 
 
