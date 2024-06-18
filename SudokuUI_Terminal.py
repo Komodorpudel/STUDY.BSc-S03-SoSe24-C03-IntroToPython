@@ -93,9 +93,21 @@ class SudokuUI_Terminal(SudokuUI):
         if saved_games:
             for i, game in enumerate(saved_games, 1):
                 print(f"{i}. {game}")
-            game_choice = input("Select a game to load (or type 'return' to return to the main menu): ")
+            selected_game_index = input("Select a game to load (or type 'return' to return to the main menu): ")
         else:
             print("No saved games available.")
+
+        try:
+            selected_game_index = int(selected_game) - 1
+            if 0 <= selected_game_index < len(saved_games):
+                selected_game = save[selected_game_index]
+                print(f"DEBUG: Selected game: {selected_game}")  # Debug print
+                game_path = os.path.join(self.user_save_path, selected_game)
+
+            else:
+                self.ui.display_message("Invalid selection: Index out of range.")
+        except (IndexError, ValueError) as e:
+            self.ui.display_message(f"Invalid selection: {e}")
 
         print(self.border)
 

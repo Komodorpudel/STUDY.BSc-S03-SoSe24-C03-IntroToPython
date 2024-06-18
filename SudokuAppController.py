@@ -15,7 +15,7 @@ class SudokuAppController:
         self.ui = ui
         self.game = None  # This will be a GameLogic instance, given by game when we start game
         self.user = None
-        self.user_save_path = None
+        self.user_save_path = SudokuSaveLoadManager.get_user_path()
 
 
 # -----------------------------------------------------------------
@@ -31,9 +31,6 @@ class SudokuAppController:
 # -----------------------------------------------------------------
     def run_welcome_menu(self):
         self.user = self.ui.display_welcome_menu()
-
-        self.user_save_path = f"saves/{self.user}"
-        # self.exit_flag = False
 
         # Create directly if not existing - DIRTY
         if not os.path.exists(self.user_save_path):
@@ -132,34 +129,21 @@ class SudokuAppController:
 ##### TODOOOOOOO
     def run_load_game_menu(self):
         # print(f"DEBUG: Available saved games: {games}")  # Debug print
-        
+
         game_choice = self.ui.display_load_menu()
         if game_choice.lower() == 'back':
-                self.run_main_menu()
-            else:
-                try:
-                    selected_game_index = int(game_choice) - 1
-                    if 0 <= selected_game_index < len(games):
-                        selected_game = games[selected_game_index]
-                        print(f"DEBUG: Selected game: {selected_game}")  # Debug print
-                        game_path = os.path.join(self.user_save_path, selected_game)
-
-                    else:
-                        self.ui.display_message("Invalid selection: Index out of range.")
-                except (IndexError, ValueError) as e:
-                    self.ui.display_message(f"Invalid selection: {e}")
-
-            self.game = SaveLoadManager.load_game(game_path, self)
+            self.run_main_menu()
+        else:
+            game_path = os.path.join(self.user_save_path, game_choice)
+            self.game = SudokuSaveLoadManager.load_game(game_path, self)
             self.game.play()
-
-
 
 
 # -----------------------------------------------------------------
     def run_highscore_menu(self):
         # Highscore viewing logic
         self.ui.display_highscore_menu()
-        
+
         while True:
             choice = self.ui.get_general_input("Enter 5 to return to main menu: ")
             if choice == '5':
