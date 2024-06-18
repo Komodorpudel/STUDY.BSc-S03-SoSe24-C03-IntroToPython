@@ -113,7 +113,7 @@ class SudokuAppController:
     def run_new_game_with_ai_menu(self):
         while True:
             try:
-                difficulty = int(self.ui.get_general_input("Enter difficulty wih ai should solve (0-9): "))
+                difficulty = int(self.ui.get_general_input("Enter difficulty of board that ai should solve (0-9): "))
                 if 0 <= difficulty <= 9:
                     break
                 else:
@@ -127,7 +127,6 @@ class SudokuAppController:
 
 
 # -----------------------------------------------------------------
-##### TODOOOOOOO
     def run_load_game_menu(self):
         # print(f"DEBUG: Available saved games: {games}")  # Debug print
 
