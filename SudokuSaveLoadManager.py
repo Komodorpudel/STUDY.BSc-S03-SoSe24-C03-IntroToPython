@@ -18,7 +18,6 @@ class SudokuSaveLoadManager:
         os.makedirs(user_path, exist_ok=True)
         return user_path
 
-
 # -----------------------------------------------------------------
     @classmethod
     def save_game(self, game):

@@ -30,11 +30,11 @@ class SudokuAppController:
 # -----------------------------------------------------------------
     def run_welcome_menu(self):
         self.user = self.ui.display_welcome_menu()
-        self.user_save_path = SudokuSaveLoadManager.get_user_path(self.user)
+        
 
         # Create directly if not existing - DIRTY
         if not os.path.exists(self.user_save_path):
-            os.makedirs(self.user_save_path)
+            self.user_save_path = SudokuSaveLoadManager.get_user_path(self.user)
             self.ui.display_message(f'New user "{self.user}" generated.')
         else:
             self.ui.display_message(f'Welcome back "{self.user}"!')
