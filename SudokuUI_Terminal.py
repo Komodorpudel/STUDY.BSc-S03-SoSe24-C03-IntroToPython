@@ -1,7 +1,7 @@
 from SudokuUI import SudokuUI
 import datetime
 from SudokuGame import *
-from SudokuSaveLoadManager import *
+import SudokuSaveLoadManager
 
 """
 Only handels print and/or returns something.
