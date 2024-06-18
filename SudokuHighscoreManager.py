@@ -25,10 +25,10 @@ class SudokuHighscoreManager:
 
 # -----------------------------------------------------------------
     @classmethod
-    def get_user_highscore(cls, username):
+    def get_user_highscore(cls, user):
         highscores = cls.get_highscores()
-        for user, score in highscores:
-            if user == username:
+        for u, score in highscores:
+            if u == user:
                 return score
         return 0
 

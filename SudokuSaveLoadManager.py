@@ -82,7 +82,7 @@ class SudokuSaveLoadManager:
         for row in board:
             print(' '.join(f"{cell['num']}:{int(cell['mutable'])}" for cell in row))
         """
-        loaded_game = SudokuGame(controller, difficulty, board, self.user, mistakes, elapsed_time)
+        loaded_game = SudokuGame(controller, difficulty, board, controller.get_user(), mistakes, elapsed_time)
         return loaded_game
 
 
