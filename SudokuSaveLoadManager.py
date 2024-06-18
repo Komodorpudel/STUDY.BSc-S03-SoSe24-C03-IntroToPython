@@ -4,6 +4,7 @@ from SudokuAppController import *
 from SudokuGame import SudokuGame
 
 class SudokuSaveLoadManager:
+# Could be changed to Class only
 
 # -----------------------------------------------------------------
     def __init__(self, controller):
