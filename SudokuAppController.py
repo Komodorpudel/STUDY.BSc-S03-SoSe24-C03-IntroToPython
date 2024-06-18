@@ -15,7 +15,7 @@ class SudokuAppController:
         self.ui = ui
         self.game = None  # This will be a GameLogic instance, given by game when we start game
         self.user = None
-        self.user_save_path = SudokuSaveLoadManager.get_user_path(self.user)
+        self.user_save_path = None
 
 
 # -----------------------------------------------------------------
@@ -31,6 +31,7 @@ class SudokuAppController:
 # -----------------------------------------------------------------
     def run_welcome_menu(self):
         self.user = self.ui.display_welcome_menu()
+        self.user_save_path = SudokuSaveLoadManager.get_user_path(self.user)
 
         # Create directly if not existing - DIRTY
         if not os.path.exists(self.user_save_path):

@@ -102,7 +102,7 @@ class SudokuUI_Terminal(SudokuUI):
             selected_game_index = int(selected_game_index) - 1
             if 0 <= selected_game_index < len(saved_games):
                 selected_game = saved_games[selected_game_index]
-                print(f"DEBUG: Selected game: {selected_game}")  # Debug print
+                # print(f"DEBUG: Selected game: {selected_game}")  # Debug print
 
             else:
                 self.display_message("Invalid selection: Index out of range.")

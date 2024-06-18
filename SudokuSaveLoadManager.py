@@ -22,7 +22,7 @@ class SudokuSaveLoadManager:
 # -----------------------------------------------------------------
     @classmethod
     def save_game(self, game):
-        user_path = self.get_user_path()
+        user_path = self.get_user_path(game.get_user())
         now = datetime.datetime.now()
         timestamp = now.strftime("%Y%m%d_%H%M%S")
         game_name = f"{game.get_username()}_{timestamp}.txt"
