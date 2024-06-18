@@ -132,7 +132,7 @@ class SudokuAppController:
 # -----------------------------------------------------------------
 ##### TODOOOOOOO
     def run_load_game_menu(self):
-        games = [f for f in os.listdir(self.user_save_path) if f.endswith('.txt')]
+        games = 
         # print(f"DEBUG: Available saved games: {games}")  # Debug print
         if games:
             print("\nAvailable saved games:")

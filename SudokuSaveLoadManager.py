@@ -7,21 +7,23 @@ class SudokuSaveLoadManager:
 # Could be changed to Class only
 
 # -----------------------------------------------------------------
-    def __init__(self, controller):
-        self.controller = controller
-        self.user = controller.get_user()
+    # def __init__(self, controller):
+    #     self.controller = controller
+    #     self.user = controller.get_user()
 
 
 # -----------------------------------------------------------------
-    def init_user_path(self):
+    @classmethod
+    def get_user_path(cls, user):
         user_path = f"saves/{user}"
         os.makedirs(user_path, exist_ok=True)
         return user_path
 
 
 # -----------------------------------------------------------------
+    @classmethod
     def save_game(self, game):
-        user_path = self.init_user_path()
+        user_path = self.get_user_path()
         now = datetime.datetime.now()
         timestamp = now.strftime("%Y%m%d_%H%M%S")
         game_name = f"{game.get_username()}_{timestamp}.txt"
@@ -35,8 +37,15 @@ class SudokuSaveLoadManager:
             f.write(f"Elapsed time: {elapsed_time}\n")
         print(f"Game saved as {game_name}.")
 
+# -----------------------------------------------------------------
+    @classmethod
+    def get_list_of_saved_games(cls, user)
+        games = [f for f in os.listdir(SudokuSaveLoadManager.get_user_path(user)) if f.endswith('.txt')]
+        return games
+
 
 # -----------------------------------------------------------------
+    @classmethod
     def load_game(self, game_path):
         print(f"Loading game from {game_path}")
         with open(game_path, 'r') as f:
