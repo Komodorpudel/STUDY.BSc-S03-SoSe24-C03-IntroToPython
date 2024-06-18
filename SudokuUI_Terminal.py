@@ -1,6 +1,5 @@
 import datetime
 from SudokuUI import SudokuUI
-from SudokuGame import *
 from SudokuSaveLoadManager import *
 
 """
