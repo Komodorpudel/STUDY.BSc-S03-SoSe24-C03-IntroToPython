@@ -89,19 +89,19 @@ class SudokuAppController:
 
 # -----------------------------------------------------------------
     def run_pause_menu(self):
-        choice = self.ui.display_pause_menu()
+
 
         while True:
+            choice = self.ui.display_pause_menu()
             if choice == '1':
                 self.ui.display_message("Resuming game...")
-                self.ui.run_main_menu()
+                self.run_main_menu()
                 break
 
             elif choice == '2':
                 ####################
                 game_name = SudokuSaveLoadManager.save_game(self.game)
                 self.get_ui().display_message(f"Game saved as {game_name}.")
-                break
 
             elif choice == '3':
                 self.ui.display_message("Returning to main menu...")

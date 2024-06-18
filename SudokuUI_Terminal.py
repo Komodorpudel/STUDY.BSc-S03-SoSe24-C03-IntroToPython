@@ -25,7 +25,9 @@ class SudokuUI_Terminal(SudokuUI):
 
 # -----------------------------------------------------------------
     def display_welcome_menu(self):
-        print( "\n+++++++++++++ WELCOME! +++++++++++++""")
+        welcome = "++++++++++++++++++ WELCOME! ++++++++++++++++++"
+        print(welcome)
+        self.menu_width = len(welcome.strip())
         self.user = input("Enter your Sudoku name: ")
         # password = input("Enter your password: ")  # For simplicity; in practice, handle passwords securely
         
@@ -35,7 +37,6 @@ class SudokuUI_Terminal(SudokuUI):
 # -----------------------------------------------------------------
     def display_main_menu(self):
         menu_title = f"\n++++++++++ Main Menu (User: {self.user}) +++++++++++"
-        self.menu_width = len(menu_title.strip())
         self.border = '+' * self.menu_width # Remove the newline for accurate length calculation
         print(menu_title)
         print("1. Start new game")
