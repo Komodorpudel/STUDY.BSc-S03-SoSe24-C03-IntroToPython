@@ -15,7 +15,7 @@ class SudokuAppController:
         self.ui = ui
         self.game = None  # This will be a GameLogic instance, given by game when we start game
         self.user = None
-        self.user_save_path = SudokuSaveLoadManager.get_user_path()
+        self.user_save_path = SudokuSaveLoadManager.get_user_path(self.user)
 
 
 # -----------------------------------------------------------------
