@@ -25,7 +25,7 @@ class SudokuSaveLoadManager:
         user_path = self.get_user_path(game.get_user())
         now = datetime.datetime.now()
         timestamp = now.strftime("%Y%m%d_%H%M%S")
-        game_name = f"{game.get_username()}_{timestamp}.txt"
+        game_name = f"{game.get_user()}_{timestamp}.txt"
         save_path = os.path.join(user_path, game_name)
 
         with open(save_path, 'w') as f:
@@ -36,7 +36,7 @@ class SudokuSaveLoadManager:
             elapsed_time = game.get_total_elapsed_time()
             f.write(f"Elapsed time: {elapsed_time}\n")
 
-        game.get_ui.display_message(f"Game saved as {game_name}.")
+        game.get_ui().display_message(f"Game saved as {game_name}.")
 
 
 # -----------------------------------------------------------------

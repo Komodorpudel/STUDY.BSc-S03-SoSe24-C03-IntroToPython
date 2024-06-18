@@ -96,15 +96,18 @@ class SudokuAppController:
                 self.ui.display_message("Resuming game...")
                 self.ui.run_main_menu()
                 break
+
             elif choice == '2':
                 ####################
                 SudokuSaveLoadManager.save_game(self.game)
-                self.ui.display_message("Game saved.")
-            elif choice == '3':
+                # self.ui.display_message("Game saved.")
+                break
 
+            elif choice == '3':
                 self.ui.display_message("Returning to main menu...")
                 self.run_main_menu()
                 break
+
             else:
                 self.ui.display_message("Invalid choice. Please enter 1, 2, or 3.")
 
