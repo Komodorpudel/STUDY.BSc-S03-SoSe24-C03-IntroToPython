@@ -87,7 +87,7 @@ class SudokuUI_Terminal(SudokuUI):
 
 # -----------------------------------------------------------------
     def display_highscore_menu(self):
-        highscores = SudokuHighscore.get_highscores()
+        highscores = SudokuHighscoreManager.get_highscores()
         title = " Highscores: "
         print("\n" + title.center(self.menu_width, '+'))
         for user, score in highscores:

@@ -3,7 +3,7 @@ import time
 from SudokuBoardGenerator import SudokuBoardGenerator
 from SudokuSaveLoadManager import SudokuSaveLoadManager
 from SudokuGame import SudokuGame
-from SudokuHighscore import *
+from SudokuHighscoreManager import *
 from SudokuAI import *
 
 class SudokuMainMenu:

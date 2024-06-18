@@ -1,9 +1,10 @@
 import os
 import time
+import sys
 from SudokuBoardGenerator import SudokuBoardGenerator
 from SudokuSaveLoadManager import SudokuSaveLoadManager
 from SudokuGame import SudokuGame
-from SudokuHighscore import *
+from SudokuHighscoreManager import *
 from SudokuAI import *
 
 class SudokuAppController:
@@ -15,7 +16,6 @@ class SudokuAppController:
         self.game = None  # This will be a GameLogic instance, given by game when we start game
         self.user = None
         self.user_save_path = None
-        self.SaveLoadManager = None
 
 
 # -----------------------------------------------------------------
@@ -65,7 +65,7 @@ class SudokuAppController:
                 break
             elif choice == '5':
                 self.ui.display_message("Exiting the game. Goodbye!")
-                break
+                sys.exit(0)
             else:
                 # Not really relevant for GUI since we can limit input options
                 self.ui.display_message("Invalid choice. Please enter 1, 2, 3, 4, or 5.")

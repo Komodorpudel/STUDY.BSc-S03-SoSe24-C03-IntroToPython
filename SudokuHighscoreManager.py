@@ -1,6 +1,6 @@
 import os
 
-class SudokuHighscore:
+class SudokuHighscoreManager:
     HIGHSCORE_FILE = "highscores.txt"
 
 # -----------------------------------------------------------------
@@ -35,16 +35,16 @@ class SudokuHighscore:
 
 # -----------------------------------------------------------------
     @classmethod
-    def set_highscore(cls, username, score):
+    def set_highscore(cls, user, score):
         highscores = cls.get_highscores()
         user_found = False
         for i, (user, scr) in enumerate(highscores):
-            if user == username:
-                highscores[i] = (username, max(scr, score))
+            if user == user:
+                highscores[i] = (user, max(scr, score))
                 user_found = True
                 break
         if not user_found:
-            highscores.append((username, score))
+            highscores.append((user, score))
         highscores.sort(key=lambda x: x[1], reverse=True)
         with open(cls.HIGHSCORE_FILE, 'w') as f:
             for user, scr in highscores:

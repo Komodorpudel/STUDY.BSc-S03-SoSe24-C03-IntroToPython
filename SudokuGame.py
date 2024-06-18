@@ -1,5 +1,5 @@
 from SudokuStopwatch import SudokuStopwatch
-from SudokuHighscore import *
+from SudokuHighscoreManager import *
 
 class SudokuGame:
 
@@ -133,8 +133,8 @@ class SudokuGame:
                             self.ui.display_message("!!!YOU LOSE!!!")
                             self.my_stopwatch.pause()
                             self.ui.display_message(f"Score substracted: {self.difficulty * -1}")
-                            SudokuHighscore.set_highscore(self.user, self.difficulty * -1)
-                            highscore = SudokuHighscore.get_user_highscore(self.user)
+                            SudokuHighscoreManager.set_highscore(self.user, self.difficulty * -1)
+                            highscore = SudokuHighscoreManager.get_user_highscore(self.user)
                             self.ui.display_message(f"New total score: {highscore}")
                             self.controller.run_main_menu()
                             break
@@ -146,8 +146,8 @@ class SudokuGame:
                             self.ui.display_message("!!!YOU WIN!!!")
                             self.my_stopwatch.pause()
                             self.ui.display_message(f"Score added: {self.difficulty}")
-                            SudokuHighscore.set_highscore(self.user, self.difficulty)
-                            highscore = SudokuHighscore.get_user_highscore(self.user)
+                            SudokuHighscoreManager.set_highscore(self.user, self.difficulty)
+                            highscore = SudokuHighscoreManager.get_user_highscore(self.user)
                             self.ui.display_message(f"New total score: {highscore}")
                             self.controller.run_main_menu()
                             break
