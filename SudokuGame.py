@@ -41,7 +41,7 @@ class SudokuGame:
 
     def get_board(self):
         return self.board
-    
+
     def get_mistakes(self):
         return self.mistakes
 
@@ -187,4 +187,3 @@ class SudokuGame:
 
 
 # -----------------------------------------------------------------
-  

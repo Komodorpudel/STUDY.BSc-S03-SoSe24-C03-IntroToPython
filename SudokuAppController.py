@@ -1,10 +1,9 @@
 import os
-import time
 import sys
 from SudokuBoardGenerator import SudokuBoardGenerator
 from SudokuSaveLoadManager import SudokuSaveLoadManager
 from SudokuGame import SudokuGame
-from SudokuHighscoreManager import *
+from SudokuHighscoreManager import SudokuHighscoreManager
 from SudokuAI import *
 
 class SudokuAppController:
@@ -39,7 +38,7 @@ class SudokuAppController:
             self.ui.display_message(f'New user "{self.user}" generated.')
         else:
             self.ui.display_message(f'Welcome back "{self.user}"!')
-        
+ 
         self.run_main_menu()
 
 

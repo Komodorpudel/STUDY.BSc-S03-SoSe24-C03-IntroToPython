@@ -36,7 +36,7 @@ class SudokuSaveLoadManager:
             elapsed_time = game.get_total_elapsed_time()
             f.write(f"Elapsed time: {elapsed_time}\n")
 
-        return game_name    
+        return game_name
 
 
 # -------------------------------------------^----------------------
@@ -48,7 +48,7 @@ class SudokuSaveLoadManager:
 
 # -----------------------------------------------------------------
     @classmethod
-    def load_game(self, game_path, controller):
+    def load_game(cls, game_path, controller):
         print(f"Loading game from {game_path}")
         with open(game_path, 'r') as f:
             board = []

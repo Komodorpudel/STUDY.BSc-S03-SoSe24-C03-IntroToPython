@@ -30,7 +30,7 @@ class SudokuUI_Terminal(SudokuUI):
         self.menu_width = len(welcome.strip())
         self.user = input("Enter your Sudoku name: ")
         # password = input("Enter your password: ")  # For simplicity; in practice, handle passwords securely
-        
+
         return self.user #, password # password
 
 
