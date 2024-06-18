@@ -15,8 +15,16 @@ class SudokuSaveLoadManager:
     @classmethod
     def get_user_path(cls, user):
         user_path = f"saves/{user}"
+        return user_path
+
+
+# -----------------------------------------------------------------
+    @classmethod
+    def set_user_path(cls, user):
+        user_path = f"saves/{user}"
         os.makedirs(user_path, exist_ok=True)
         return user_path
+
 
 # -----------------------------------------------------------------
     @classmethod

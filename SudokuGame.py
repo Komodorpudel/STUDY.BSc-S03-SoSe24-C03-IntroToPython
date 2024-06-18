@@ -16,7 +16,6 @@ class SudokuGame:
         self.previous_elapsed_time = total_elapsed_time
 
         self.my_stopwatch = SudokuStopwatch()
-        self.is_paused = False
         self.my_stopwatch.start() # We start counting
 
         if board is None:
@@ -70,6 +69,7 @@ class SudokuGame:
                 self.mistakes += 1
                 self.ui.display_board()
                 return False
+            
             if self.board[i][col]['num'] == num:
                 self.ui.display_message(f"The number {num} is already in this column.")
                 self.mistakes += 1
@@ -84,6 +84,7 @@ class SudokuGame:
                     self.mistakes += 1
                     self.ui.display_board()
                     return False
+                
         self.ui.display_message("Move accepted.")
         return True
 
@@ -125,7 +126,6 @@ class SudokuGame:
             try:
                 row, col, num = self.ui.get_next_move()
                 if row == 'pause':
-                    self.is_paused = True
                     self.controller.run_pause_menu()
                     break
 

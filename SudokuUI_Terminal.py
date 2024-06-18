@@ -1,6 +1,7 @@
 import datetime
 from SudokuUI import SudokuUI
 from SudokuSaveLoadManager import *
+from SudokuHighscoreManager import SudokuHighscoreManager
 
 """
 Only handels print and/or returns something.
@@ -94,20 +95,22 @@ class SudokuUI_Terminal(SudokuUI):
             for i, game in enumerate(saved_games, 1):
                 print(f"{i}. {game}")
             selected_game_index = input("Select a game to load (or type 'return' to return to the main menu): ")
+
+            try:
+                selected_game_index = int(selected_game_index) - 1
+                if 0 <= selected_game_index < len(saved_games):
+                    selected_game = saved_games[selected_game_index]
+                    # print(f"DEBUG: Selected game: {selected_game}")  # Debug print
+
+                else:
+                    self.display_message("Invalid selection: Index out of range.")
+            except (IndexError, ValueError) as e:
+                self.display_message(f"Invalid selection: {e}")
+
         else:
             print("No saved games available.")
             print(self.border)
-
-        try:
-            selected_game_index = int(selected_game_index) - 1
-            if 0 <= selected_game_index < len(saved_games):
-                selected_game = saved_games[selected_game_index]
-                # print(f"DEBUG: Selected game: {selected_game}")  # Debug print
-
-            else:
-                self.display_message("Invalid selection: Index out of range.")
-        except (IndexError, ValueError) as e:
-            self.display_message(f"Invalid selection: {e}")
+            selected_game_index = input("Type 'return' to return to the main menu): ")
 
         return selected_game
 
