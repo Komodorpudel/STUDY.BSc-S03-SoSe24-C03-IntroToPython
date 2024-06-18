@@ -99,8 +99,8 @@ class SudokuAppController:
 
             elif choice == '2':
                 ####################
-                SudokuSaveLoadManager.save_game(self.game)
-                # self.ui.display_message("Game saved.")
+                game_name = SudokuSaveLoadManager.save_game(self.game)
+                self.get_ui().display_message(f"Game saved as {game_name}.")
                 break
 
             elif choice == '3':

@@ -36,10 +36,10 @@ class SudokuSaveLoadManager:
             elapsed_time = game.get_total_elapsed_time()
             f.write(f"Elapsed time: {elapsed_time}\n")
 
-        game.get_ui().display_message(f"Game saved as {game_name}.")
+        return game_name    
 
 
-# -----------------------------------------------------------------
+# -------------------------------------------^----------------------
     @classmethod
     def get_list_of_saved_games(cls, user):
         games = [f for f in os.listdir(SudokuSaveLoadManager.get_user_path(user)) if f.endswith('.txt')]
